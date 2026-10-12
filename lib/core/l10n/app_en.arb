@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+  "appTitle": "Speech Coach",
+  "welcomeTitle": "Make room for your voice",
+  "welcomeBody": "A little practice, one day at a time.",
+  "settings": "Settings",
+  "appearance": "Make it yours",
+  "theme": "Theme",
+  "honey": "Honey",
+  "ember": "Ember",
+  "meadow": "Meadow",
+  "dusk": "Dusk",
+  "displayMode": "Display",
+  "system": "Use device setting",
+  "light": "Light",
+  "dark": "Dark",
+  "language": "Language",
+  "english": "English",
+  "amharic": "አማርኛ",
+  "pageNotFound": "Let's head back",
+  "home": "Home"
+}

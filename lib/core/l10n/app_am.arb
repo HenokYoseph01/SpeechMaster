@@ -1,0 +1,22 @@
+{
+  "@@locale": "am",
+  "appTitle": "የንግግር አሰልጣኝ",
+  "welcomeTitle": "ለድምፅዎ ቦታ ይስጡ",
+  "welcomeBody": "በየቀኑ ትንሽ ልምምድ።",
+  "settings": "ቅንብሮች",
+  "appearance": "ለእርስዎ የሚስማማ ያድርጉት",
+  "theme": "ገጽታ",
+  "honey": "ማር",
+  "ember": "ፍም",
+  "meadow": "መስክ",
+  "dusk": "ምሽት",
+  "displayMode": "ማሳያ",
+  "system": "የመሣሪያውን ቅንብር ይጠቀሙ",
+  "light": "ብርሃን",
+  "dark": "ጨለማ",
+  "language": "ቋንቋ",
+  "english": "English",
+  "amharic": "አማርኛ",
+  "pageNotFound": "ወደ መነሻ እንመለስ",
+  "home": "መነሻ"
+}
