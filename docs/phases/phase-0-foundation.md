@@ -46,5 +46,7 @@ Worker configuration integration remains assigned to Phase 4.
 
 Appearance and language now persist in SQLite. Database schema, reopening,
 foreign keys, settings persistence and failure recovery have automated tests.
-No real Android phone was detected during the app-shell task; hardware
-acceptance remains pending. Follow `docs/database/README.md` for the phone check.
+The user confirmed the real-phone acceptance check passed on 2026-10-13:
+the app launches, themes and languages switch, and settings persist after
+restart. Phase 0 is complete. Version 1 creates the first schema; no older
+schema exists to upgrade.

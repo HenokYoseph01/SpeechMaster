@@ -235,6 +235,180 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get retry;
+
+  /// No description provided for @record.
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get record;
+
+  /// No description provided for @recordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Give your voice a little practice'**
+  String get recordTitle;
+
+  /// No description provided for @recordPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recording stays on this phone. We use the microphone to draw how your pitch moves.'**
+  String get recordPrivacy;
+
+  /// No description provided for @durationSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds} s'**
+  String durationSeconds(int seconds);
+
+  /// No description provided for @secondsRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds} seconds left'**
+  String secondsRemaining(int seconds);
+
+  /// No description provided for @startRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording'**
+  String get startRecording;
+
+  /// No description provided for @recordAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Practice again'**
+  String get recordAgain;
+
+  /// No description provided for @stopRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish recording'**
+  String get stopRecording;
+
+  /// No description provided for @stopAfterSeconds.
+  ///
+  /// In en, this message translates to:
+  /// **'You can finish after {seconds} seconds.'**
+  String stopAfterSeconds(int seconds);
+
+  /// No description provided for @discardRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard recording'**
+  String get discardRecording;
+
+  /// No description provided for @recordingNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Speak at your own pace'**
+  String get recordingNow;
+
+  /// No description provided for @preparingMicrophone.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting your microphone ready…'**
+  String get preparingMicrophone;
+
+  /// No description provided for @finishingRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Finishing your recording…'**
+  String get finishingRecording;
+
+  /// No description provided for @analyzingPitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Drawing the movement in your voice…'**
+  String get analyzingPitch;
+
+  /// No description provided for @discardingRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Putting that take aside…'**
+  String get discardingRecording;
+
+  /// No description provided for @microphoneDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Microphone access is off. Enable it in your phone\'s app settings, then come back and try again.'**
+  String get microphoneDenied;
+
+  /// No description provided for @openAppSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open app settings'**
+  String get openAppSettings;
+
+  /// No description provided for @recordingInterrupted.
+  ///
+  /// In en, this message translates to:
+  /// **'That recording was interrupted. Let\'s try again.'**
+  String get recordingInterrupted;
+
+  /// No description provided for @recordingFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The recording couldn\'t start or finish. Please try again.'**
+  String get recordingFailed;
+
+  /// No description provided for @pitchAnalysisFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your audio is still on this phone. The pitch chart couldn\'t finish. Please try again.'**
+  String get pitchAnalysisFailed;
+
+  /// No description provided for @recordingSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your audio is still on this phone. It couldn\'t be added to your practice. Please try again.'**
+  String get recordingSaveFailed;
+
+  /// No description provided for @retryPitchAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Try drawing the chart again'**
+  String get retryPitchAnalysis;
+
+  /// No description provided for @recordingSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Your practice is saved on this phone.'**
+  String get recordingSaved;
+
+  /// No description provided for @pitchChartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How your pitch moved'**
+  String get pitchChartTitle;
+
+  /// No description provided for @pitchChartExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'The line shows rises and falls relative to your usual tone. Gaps are moments without a clear pitch.'**
+  String get pitchChartExplanation;
+
+  /// No description provided for @noPitchFound.
+  ///
+  /// In en, this message translates to:
+  /// **'There wasn\'t enough clear pitch to draw a line. Try speaking a little closer to the microphone in a quiet place.'**
+  String get noPitchFound;
+
+  /// No description provided for @pitchSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pitch moved from {low} to {high} semitones relative to your usual tone over {seconds} seconds.'**
+  String pitchSummary(String low, String high, int seconds);
+
+  /// No description provided for @microphoneLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Live microphone level'**
+  String get microphoneLevel;
+
+  /// No description provided for @recordingDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording length'**
+  String get recordingDuration;
 }
 
 class _AppLocalizationsDelegate

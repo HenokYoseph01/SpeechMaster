@@ -16,6 +16,7 @@ dependencies:
   go_router: 18.0.2
   intl: 0.20.3
   path_provider: 2.1.6
+  record: 7.1.2
   sqlite3: 3.7.0
 
 dev_dependencies:
@@ -28,6 +29,8 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  assets:
+    - assets/audio_config.json
   fonts:
     - family: Nunito
       fonts:

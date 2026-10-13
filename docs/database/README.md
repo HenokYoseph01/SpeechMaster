@@ -42,5 +42,5 @@ Check each theme in light and dark mode and switch between English and Amharic.
 Choose a theme, display mode, and language, then close and relaunch the app.
 Verify that all three choices remain. Report any startup or save error.
 
-Phase 0 remains open until the real-phone check passes. Version 1 is the first
+The user confirmed these Phase 0 phone checks passed on 2026-10-13. Version 1 is the first
 database schema; there is no earlier app database requiring a version upgrade.

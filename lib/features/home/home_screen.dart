@@ -39,6 +39,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   FilledButton.icon(
+                    onPressed: () => context.push('/record'),
+                    icon: const Icon(Icons.mic_rounded),
+                    label: Text(strings.record),
+                  ),
+                  const SizedBox(height: 16),
+                  FilledButton.icon(
                     onPressed: () => context.push('/settings'),
                     icon: const Icon(Icons.tune_rounded),
                     label: Text(strings.settings),

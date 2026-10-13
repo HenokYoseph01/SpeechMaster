@@ -4,12 +4,17 @@ import 'package:go_router/go_router.dart';
 
 import '../features/home/home_screen.dart';
 import '../features/settings/settings_screen.dart';
+import '../features/record/record_screen.dart';
 import 'l10n/generated/app_localizations.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+      GoRoute(
+        path: '/record',
+        builder: (context, state) => const RecordScreen(),
+      ),
       GoRoute(
         path: '/settings',
         builder: (context, state) => const SettingsScreen(),
