@@ -65,4 +65,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get home => 'Home';
+
+  @override
+  String get startingApp => 'Getting your practice space ready…';
+
+  @override
+  String get storageOpenFailed =>
+      'Your practice space couldn\'t open. Please try again.';
+
+  @override
+  String get settingsSaveFailed =>
+      'Your changes couldn\'t be saved. Please try again.';
+
+  @override
+  String get retry => 'Try again';
 }

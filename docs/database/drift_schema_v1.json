@@ -1,0 +1,1021 @@
+{
+  "_meta": {
+    "description": "This file contains a serialized version of schema entities for drift.",
+    "version": "1.3.0"
+  },
+  "options": {
+    "store_date_time_values_as_text": false
+  },
+  "entities": [
+    {
+      "id": 0,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "recordings",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "PRIMARY KEY",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "primary-key"
+            ]
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "duration_ms",
+            "getter_name": "durationMs",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_ms",
+            "getter_name": "targetMs",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "audio_path",
+            "getter_name": "audioPath",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "kind",
+            "getter_name": "kind",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "prompt_id",
+            "getter_name": "promptId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "drill_id",
+            "getter_name": "drillId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "title",
+            "getter_name": "title",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "language",
+            "getter_name": "language",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "analysis_version",
+            "getter_name": "analysisVersion",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "overall_score",
+            "getter_name": "overallScore",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 1,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "analysis_results",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "recording_id",
+            "getter_name": "recordingId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "PRIMARY KEY REFERENCES recordings(id)ON DELETE CASCADE",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "primary-key",
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "recordings",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": "cascade"
+                }
+              }
+            ]
+          },
+          {
+            "name": "pitch_median_hz",
+            "getter_name": "pitchMedianHz",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pitch_range_st",
+            "getter_name": "pitchRangeSt",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pitch_std_st",
+            "getter_name": "pitchStdSt",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pitch_movement_st_s",
+            "getter_name": "pitchMovementStS",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "articulation_rate",
+            "getter_name": "articulationRate",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "speaking_rate",
+            "getter_name": "speakingRate",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pace_cv",
+            "getter_name": "paceCv",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "loudness_range_db",
+            "getter_name": "loudnessRangeDb",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "energy_trend_db",
+            "getter_name": "energyTrendDb",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pauses_per_min",
+            "getter_name": "pausesPerMin",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pause_ratio",
+            "getter_name": "pauseRatio",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "long_pause_count",
+            "getter_name": "longPauseCount",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "mean_pause_ms",
+            "getter_name": "meanPauseMs",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "speech_ms",
+            "getter_name": "speechMs",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "snr_db",
+            "getter_name": "snrDb",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "clipping_pct",
+            "getter_name": "clippingPct",
+            "moor_type": "double",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "filler_count",
+            "getter_name": "fillerCount",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "score_pitch",
+            "getter_name": "scorePitch",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "score_pace",
+            "getter_name": "scorePace",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "score_pace_var",
+            "getter_name": "scorePaceVar",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "score_pause",
+            "getter_name": "scorePause",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "score_volume",
+            "getter_name": "scoreVolume",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "score_energy",
+            "getter_name": "scoreEnergy",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "contour_json",
+            "getter_name": "contourJson",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "pauses_json",
+            "getter_name": "pausesJson",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "flags_json",
+            "getter_name": "flagsJson",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 2,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "tip_log",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "PRIMARY KEY AUTOINCREMENT",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "auto-increment"
+            ]
+          },
+          {
+            "name": "recording_id",
+            "getter_name": "recordingId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL REFERENCES recordings(id)ON DELETE CASCADE",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "recordings",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": "cascade"
+                }
+              }
+            ]
+          },
+          {
+            "name": "rule_id",
+            "getter_name": "ruleId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "variant_id",
+            "getter_name": "variantId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "kind",
+            "getter_name": "kind",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "shown_at",
+            "getter_name": "shownAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "helpful",
+            "getter_name": "helpful",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 3,
+      "references": [
+        2
+      ],
+      "type": "index",
+      "data": {
+        "on": 2,
+        "name": "idx_tip_log_rule",
+        "sql": "CREATE INDEX idx_tip_log_rule ON tip_log(rule_id, shown_at DESC);",
+        "unique": false,
+        "columns": []
+      }
+    },
+    {
+      "id": 4,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "drill_sessions",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "PRIMARY KEY",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "primary-key"
+            ]
+          },
+          {
+            "name": "drill_id",
+            "getter_name": "drillId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "started_at",
+            "getter_name": "startedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "completed_at",
+            "getter_name": "completedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recording_id",
+            "getter_name": "recordingId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "REFERENCES recordings(id)ON DELETE SET NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "recordings",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": "setNull"
+                }
+              }
+            ]
+          },
+          {
+            "name": "passed",
+            "getter_name": "passed",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 5,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "daily_activity",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "day",
+            "getter_name": "day",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "PRIMARY KEY",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "primary-key"
+            ]
+          },
+          {
+            "name": "practice_ms",
+            "getter_name": "practiceMs",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT 0",
+            "default_dart": "const CustomExpression('0')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "recordings",
+            "getter_name": "recordings",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT 0",
+            "default_dart": "const CustomExpression('0')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "drills",
+            "getter_name": "drills",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT 0",
+            "default_dart": "const CustomExpression('0')",
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 6,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "settings",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "key",
+            "getter_name": "key",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "PRIMARY KEY",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "primary-key"
+            ]
+          },
+          {
+            "name": "value",
+            "getter_name": "value",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 7,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "entitlements",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "PRIMARY KEY CHECK (id = 1)",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "primary-key"
+            ]
+          },
+          {
+            "name": "tier",
+            "getter_name": "tier",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL DEFAULT 'free'",
+            "default_dart": "const CustomExpression('\\'free\\'')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "expires_at",
+            "getter_name": "expiresAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "source",
+            "getter_name": "source",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "token",
+            "getter_name": "token",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 8,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "ai_feedback",
+        "was_declared_in_moor": true,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "PRIMARY KEY AUTOINCREMENT",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "auto-increment"
+            ]
+          },
+          {
+            "name": "recording_id",
+            "getter_name": "recordingId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL REFERENCES recordings(id)ON DELETE CASCADE",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "recordings",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": "cascade"
+                }
+              }
+            ]
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "model",
+            "getter_name": "model",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "prompt_version",
+            "getter_name": "promptVersion",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "body_json",
+            "getter_name": "bodyJson",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": "NOT NULL",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "tokens_in",
+            "getter_name": "tokensIn",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "tokens_out",
+            "getter_name": "tokensOut",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    }
+  ],
+  "fixed_sql": [
+    {
+      "name": "recordings",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"recordings\" (\"id\" TEXT PRIMARY KEY, \"created_at\" INTEGER NOT NULL, \"duration_ms\" INTEGER NOT NULL, \"target_ms\" INTEGER NOT NULL, \"audio_path\" TEXT NOT NULL, \"kind\" TEXT NOT NULL, \"prompt_id\" TEXT, \"drill_id\" TEXT, \"title\" TEXT, \"language\" TEXT NOT NULL, \"analysis_version\" INTEGER NOT NULL, \"overall_score\" INTEGER, \"deleted_at\" INTEGER);"
+        }
+      ]
+    },
+    {
+      "name": "analysis_results",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"analysis_results\" (\"recording_id\" TEXT PRIMARY KEY REFERENCES recordings(id)ON DELETE CASCADE, \"pitch_median_hz\" REAL, \"pitch_range_st\" REAL, \"pitch_std_st\" REAL, \"pitch_movement_st_s\" REAL, \"articulation_rate\" REAL, \"speaking_rate\" REAL, \"pace_cv\" REAL, \"loudness_range_db\" REAL, \"energy_trend_db\" REAL, \"pauses_per_min\" REAL, \"pause_ratio\" REAL, \"long_pause_count\" INTEGER, \"mean_pause_ms\" INTEGER, \"speech_ms\" INTEGER, \"snr_db\" REAL, \"clipping_pct\" REAL, \"filler_count\" INTEGER, \"score_pitch\" INTEGER, \"score_pace\" INTEGER, \"score_pace_var\" INTEGER, \"score_pause\" INTEGER, \"score_volume\" INTEGER, \"score_energy\" INTEGER, \"contour_json\" TEXT, \"pauses_json\" TEXT, \"flags_json\" TEXT);"
+        }
+      ]
+    },
+    {
+      "name": "tip_log",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"tip_log\" (\"id\" INTEGER PRIMARY KEY AUTOINCREMENT, \"recording_id\" TEXT NOT NULL REFERENCES recordings(id)ON DELETE CASCADE, \"rule_id\" TEXT NOT NULL, \"variant_id\" TEXT NOT NULL, \"kind\" TEXT NOT NULL, \"shown_at\" INTEGER NOT NULL, \"helpful\" INTEGER);"
+        }
+      ]
+    },
+    {
+      "name": "idx_tip_log_rule",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_tip_log_rule ON tip_log (rule_id, shown_at DESC)"
+        }
+      ]
+    },
+    {
+      "name": "drill_sessions",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"drill_sessions\" (\"id\" TEXT PRIMARY KEY, \"drill_id\" TEXT NOT NULL, \"started_at\" INTEGER NOT NULL, \"completed_at\" INTEGER, \"recording_id\" TEXT REFERENCES recordings(id)ON DELETE SET NULL, \"passed\" INTEGER);"
+        }
+      ]
+    },
+    {
+      "name": "daily_activity",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"daily_activity\" (\"day\" TEXT PRIMARY KEY, \"practice_ms\" INTEGER NOT NULL DEFAULT 0, \"recordings\" INTEGER NOT NULL DEFAULT 0, \"drills\" INTEGER NOT NULL DEFAULT 0);"
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"settings\" (\"key\" TEXT PRIMARY KEY, \"value\" TEXT NOT NULL);"
+        }
+      ]
+    },
+    {
+      "name": "entitlements",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"entitlements\" (\"id\" INTEGER PRIMARY KEY CHECK (id = 1), \"tier\" TEXT NOT NULL DEFAULT 'free', \"expires_at\" INTEGER, \"source\" TEXT, \"token\" TEXT, \"updated_at\" INTEGER NOT NULL);"
+        }
+      ]
+    },
+    {
+      "name": "ai_feedback",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"ai_feedback\" (\"id\" INTEGER PRIMARY KEY AUTOINCREMENT, \"recording_id\" TEXT NOT NULL REFERENCES recordings(id)ON DELETE CASCADE, \"created_at\" INTEGER NOT NULL, \"model\" TEXT, \"prompt_version\" INTEGER, \"body_json\" TEXT NOT NULL, \"tokens_in\" INTEGER, \"tokens_out\" INTEGER);"
+        }
+      ]
+    }
+  ]
+}

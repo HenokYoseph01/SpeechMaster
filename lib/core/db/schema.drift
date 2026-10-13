@@ -1,0 +1,82 @@
+CREATE TABLE recordings (
+  id TEXT PRIMARY KEY,
+  created_at INTEGER NOT NULL,
+  duration_ms INTEGER NOT NULL,
+  target_ms INTEGER NOT NULL,
+  audio_path TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  prompt_id TEXT,
+  drill_id TEXT,
+  title TEXT,
+  language TEXT NOT NULL,
+  analysis_version INTEGER NOT NULL,
+  overall_score INTEGER,
+  deleted_at INTEGER
+);
+
+CREATE TABLE analysis_results (
+  recording_id TEXT PRIMARY KEY REFERENCES recordings(id) ON DELETE CASCADE,
+  pitch_median_hz REAL, pitch_range_st REAL, pitch_std_st REAL, pitch_movement_st_s REAL,
+  articulation_rate REAL, speaking_rate REAL, pace_cv REAL,
+  loudness_range_db REAL, energy_trend_db REAL,
+  pauses_per_min REAL, pause_ratio REAL, long_pause_count INTEGER, mean_pause_ms INTEGER,
+  speech_ms INTEGER, snr_db REAL, clipping_pct REAL,
+  filler_count INTEGER,
+  score_pitch INTEGER, score_pace INTEGER, score_pace_var INTEGER,
+  score_pause INTEGER, score_volume INTEGER, score_energy INTEGER,
+  contour_json TEXT,
+  pauses_json TEXT,
+  flags_json TEXT
+);
+
+CREATE TABLE tip_log (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  recording_id TEXT NOT NULL REFERENCES recordings(id) ON DELETE CASCADE,
+  rule_id TEXT NOT NULL,
+  variant_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  shown_at INTEGER NOT NULL,
+  helpful INTEGER
+);
+CREATE INDEX idx_tip_log_rule ON tip_log(rule_id, shown_at DESC);
+
+CREATE TABLE drill_sessions (
+  id TEXT PRIMARY KEY,
+  drill_id TEXT NOT NULL,
+  started_at INTEGER NOT NULL,
+  completed_at INTEGER,
+  recording_id TEXT REFERENCES recordings(id) ON DELETE SET NULL,
+  passed INTEGER
+);
+
+CREATE TABLE daily_activity (
+  day TEXT PRIMARY KEY,
+  practice_ms INTEGER NOT NULL DEFAULT 0,
+  recordings INTEGER NOT NULL DEFAULT 0,
+  drills INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE settings ("key" TEXT PRIMARY KEY, value TEXT NOT NULL);
+
+CREATE TABLE entitlements (
+  id INTEGER PRIMARY KEY CHECK (id = 1),
+  tier TEXT NOT NULL DEFAULT 'free',
+  expires_at INTEGER,
+  source TEXT,
+  token TEXT,
+  updated_at INTEGER NOT NULL
+);
+
+CREATE TABLE ai_feedback (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  recording_id TEXT NOT NULL REFERENCES recordings(id) ON DELETE CASCADE,
+  created_at INTEGER NOT NULL,
+  model TEXT, prompt_version INTEGER,
+  body_json TEXT NOT NULL,
+  tokens_in INTEGER, tokens_out INTEGER
+);
+
+allSettings: SELECT * FROM settings;
+
+writeSetting: INSERT INTO settings ("key", value) VALUES (:settingKey, :value)
+  ON CONFLICT ("key") DO UPDATE SET value = excluded.value;

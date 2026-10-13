@@ -7,10 +7,10 @@ Design system, and Build phases (Phase 0). Follow `AGENTS.md`.
 
 - [x] Create an Android Flutter scaffold and initialize Git.
 - [x] Add Riverpod and go_router, with feature folders from the spec.
-- [ ] Implement the specified drift schema and migrations after approval.
+- [x] Implement the specified drift schema and initial creation after approval; keep a schema snapshot for future migrations.
 - [x] Add four themes in light and dark, using theme tokens.
 - [x] Add English and Amharic ARB localization.
-- [ ] Implement FeatureFlags after approval, with AI coach off by default.
+- [x] Implement FeatureFlags after approval, with AI coach off by default.
 
 ## Acceptance
 
@@ -23,7 +23,7 @@ Design system, and Build phases (Phase 0). Follow `AGENTS.md`.
 Complete Phase 0 before starting the 30-second recording and pitch-contour
 prototype. Do not start Phase 1 or later assignments in this phase.
 
-## Next task proposal (approval required)
+## Approved database and flag task
 
 Implement schema version 1 with the eight tables in the spec's Data model:
 `recordings`, `analysis_results`, `tip_log`, `drill_sessions`, `daily_activity`,
@@ -32,8 +32,9 @@ foreign keys, cascading behavior, and tip-log index. Enable SQLite foreign keys,
 create the initial schema on first open, and test reopening, relationships, and
 the schema version. Persist appearance and language in `settings`.
 
-Use `drift` and `sqlite3_flutter_libs` from the spec. Supporting dependencies
-requiring approval: `path_provider` for the private app data directory,
+Use `drift` and `sqlite3` 3.x. The user approved replacing the obsolete
+`sqlite3_flutter_libs` package without editing the human-owned spec.
+Approved supporting dependencies: `path_provider` for the private app data directory,
 `drift_dev` and `build_runner` for schema generation and migration tooling.
 Check current package documentation and add them with `flutter pub add`.
 
@@ -43,5 +44,7 @@ Unknown remote configuration stays disabled. Test the combinations, with no
 coach UI, entitlement implementation, purchases, or network calls in this task.
 Worker configuration integration remains assigned to Phase 4.
 
-Current appearance and language settings are in memory. No real Android phone
-was detected during the app-shell task; hardware acceptance remains pending.
+Appearance and language now persist in SQLite. Database schema, reopening,
+foreign keys, settings persistence and failure recovery have automated tests.
+No real Android phone was detected during the app-shell task; hardware
+acceptance remains pending. Follow `docs/database/README.md` for the phone check.

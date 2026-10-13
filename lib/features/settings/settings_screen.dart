@@ -30,6 +30,15 @@ class SettingsScreen extends ConsumerWidget {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 24),
+            if (settings.saveFailed) ...[
+              Text(strings.settingsSaveFailed),
+              const SizedBox(height: 16),
+              FilledButton(
+                onPressed: controller.retrySave,
+                child: Text(strings.retry),
+              ),
+              const SizedBox(height: 24),
+            ],
             DropdownButtonFormField<AppTheme>(
               key: ValueKey(settings.theme),
               initialValue: settings.theme,

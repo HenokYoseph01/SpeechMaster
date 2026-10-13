@@ -18,5 +18,9 @@
   "english": "English",
   "amharic": "አማርኛ",
   "pageNotFound": "ወደ መነሻ እንመለስ",
-  "home": "መነሻ"
+  "home": "መነሻ",
+  "startingApp": "የልምምድ ቦታዎን በማዘጋጀት ላይ…",
+  "storageOpenFailed": "የልምምድ ቦታዎን መክፈት አልተቻለም። እባክዎ እንደገና ይሞክሩ።",
+  "settingsSaveFailed": "ለውጦችዎን ማስቀመጥ አልተቻለም። እባክዎ እንደገና ይሞክሩ።",
+  "retry": "እንደገና ይሞክሩ"
 }

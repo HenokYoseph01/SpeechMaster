@@ -65,4 +65,16 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get home => 'መነሻ';
+
+  @override
+  String get startingApp => 'የልምምድ ቦታዎን በማዘጋጀት ላይ…';
+
+  @override
+  String get storageOpenFailed => 'የልምምድ ቦታዎን መክፈት አልተቻለም። እባክዎ እንደገና ይሞክሩ።';
+
+  @override
+  String get settingsSaveFailed => 'ለውጦችዎን ማስቀመጥ አልተቻለም። እባክዎ እንደገና ይሞክሩ።';
+
+  @override
+  String get retry => 'እንደገና ይሞክሩ';
 }

@@ -211,6 +211,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get home;
+
+  /// No description provided for @startingApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting your practice space ready…'**
+  String get startingApp;
+
+  /// No description provided for @storageOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your practice space couldn\'t open. Please try again.'**
+  String get storageOpenFailed;
+
+  /// No description provided for @settingsSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your changes couldn\'t be saved. Please try again.'**
+  String get settingsSaveFailed;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get retry;
 }
 
 class _AppLocalizationsDelegate

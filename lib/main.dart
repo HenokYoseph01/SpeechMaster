@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/bootstrap.dart';
 import 'core/l10n/generated/app_localizations.dart';
 import 'core/router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/settings/settings_provider.dart';
 
 void main() {
-  runApp(const ProviderScope(child: MainApp()));
+  runApp(const ProviderScope(child: AppBootstrap()));
 }
 
 class MainApp extends ConsumerWidget {

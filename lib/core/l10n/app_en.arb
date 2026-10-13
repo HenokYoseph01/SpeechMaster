@@ -18,5 +18,9 @@
   "english": "English",
   "amharic": "አማርኛ",
   "pageNotFound": "Let's head back",
-  "home": "Home"
+  "home": "Home",
+  "startingApp": "Getting your practice space ready…",
+  "storageOpenFailed": "Your practice space couldn't open. Please try again.",
+  "settingsSaveFailed": "Your changes couldn't be saved. Please try again.",
+  "retry": "Try again"
 }

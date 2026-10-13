@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:drift/native.dart';
+import 'package:speech_coach/core/db/app_database.dart';
+import 'package:speech_coach/core/db/database_provider.dart';
 import 'package:speech_coach/core/l10n/generated/app_localizations.dart';
 import 'package:speech_coach/core/router.dart';
 import 'package:speech_coach/core/theme/app_theme.dart';
 import 'package:speech_coach/features/settings/settings_provider.dart';
+import 'package:speech_coach/features/settings/settings_repository.dart';
 import 'package:speech_coach/main.dart';
 
 void main() {
   testWidgets('settings change theme and language without losing navigation', (
     tester,
   ) async {
-    await tester.pumpWidget(const ProviderScope(child: MainApp()));
+    final database = AppDatabase(NativeDatabase.memory());
+    final container = ProviderContainer(
+      overrides: [databaseProvider.overrideWithValue(database)],
+    );
+    addTearDown(container.dispose);
+    addTearDown(database.close);
+    await tester.pumpWidget(
+      UncontrolledProviderScope(container: container, child: const MainApp()),
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Settings'));
     await tester.pumpAndSettle();
@@ -42,15 +54,30 @@ void main() {
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
     expect(find.text('ለድምፅዎ ቦታ ይስጡ'), findsOneWidget);
+    await tester.runAsync(() async {
+      await container.read(settingsProvider.notifier).pendingSave;
+      final saved = await container.read(settingsRepositoryProvider).load();
+      expect(saved.theme, AppTheme.dusk);
+      expect(saved.mode, ThemeMode.dark);
+      expect(saved.locale, const Locale('am'));
+    });
     expect(tester.takeException(), isNull);
   });
 
   testWidgets('settings deep link works with large Amharic text', (
     tester,
   ) async {
-    final container = ProviderContainer();
+    final database = AppDatabase(NativeDatabase.memory());
+    final container = ProviderContainer(
+      overrides: [databaseProvider.overrideWithValue(database)],
+    );
     addTearDown(container.dispose);
-    container.read(settingsProvider.notifier).setLocale(const Locale('am'));
+    addTearDown(database.close);
+    await tester.runAsync(
+      () => container
+          .read(settingsProvider.notifier)
+          .setLocale(const Locale('am')),
+    );
     container.read(routerProvider).go('/settings');
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
