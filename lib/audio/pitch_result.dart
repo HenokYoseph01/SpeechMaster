@@ -1,3 +1,5 @@
+import 'analysis_result.dart';
+
 class PitchPoint {
   const PitchPoint(this.timeMs, this.semitones, this.db);
   final int timeMs;
@@ -16,6 +18,7 @@ class PitchResult {
     required this.analysisMs,
     required this.noiseFloorDb,
     this.usedPitchFallback = false,
+    this.analysis,
   });
   final int durationMs;
   final List<PitchPoint> points;
@@ -25,6 +28,7 @@ class PitchResult {
   final int analysisMs;
   final double? noiseFloorDb;
   final bool usedPitchFallback;
+  final AnalysisResult? analysis;
   bool get hasPitch =>
       medianHz != null && points.any((point) => point.semitones != null);
 }

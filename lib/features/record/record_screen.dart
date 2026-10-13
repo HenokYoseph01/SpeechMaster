@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/l10n/generated/app_localizations.dart';
 import '../../core/theme/app_theme.dart';
+import 'delivery_summary.dart';
 import 'pitch_chart.dart';
 import 'recording_controller.dart';
 import 'recording_model.dart';
@@ -240,6 +241,10 @@ class _RecordScreenState extends ConsumerState<RecordScreen>
                                 config.value!.chartMinimumSpanSemitones,
                           ),
                           const SizedBox(height: 24),
+                          if (state.result!.analysis != null) ...[
+                            DeliverySummary(analysis: state.result!.analysis!),
+                            const SizedBox(height: 24),
+                          ],
                           Text(strings.recordingSaved),
                           const SizedBox(height: 24),
                         ],

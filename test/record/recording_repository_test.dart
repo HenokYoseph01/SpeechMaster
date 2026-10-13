@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speech_coach/audio/pitch_result.dart';
+import 'package:speech_coach/audio/dsp/pitch_analysis.dart';
+import 'package:speech_coach/audio/dsp/wav.dart';
 import 'package:speech_coach/core/db/app_database.dart';
 import 'package:speech_coach/features/record/recording_model.dart';
 import 'package:speech_coach/features/record/recording_repository.dart';
@@ -11,6 +13,117 @@ import 'package:speech_coach/features/record/recording_repository.dart';
 import '../support/audio_fixtures.dart';
 
 void main() {
+  test(
+    'full metrics and pause intervals survive reopening without any scores',
+    () async {
+      final directory = await Directory.systemTemp.createTemp(
+        'speech_coach_metrics_',
+      );
+      addTearDown(() => directory.delete(recursive: true));
+      final file = File('${directory.path}/practice.sqlite');
+      var database = AppDatabase(NativeDatabase(file));
+      final repository = RecordingRepository(
+        database,
+        directory: () async => directory,
+      );
+      final draft = await repository.allocate(
+        RecordingMode.thirtySeconds,
+        'en',
+      );
+      final config = loadAudioConfig();
+      final audio = WavAudio(syllablePulses(), 16000);
+      final result = analyzePitch(audio, config);
+      final metrics = result.analysis!;
+      await File(draft.path).writeAsBytes(makeWav(audio.samples));
+      await repository.saveCapture(draft, audio.durationMs, config);
+      await repository.savePitch(draft, result);
+      await database.close();
+      database = AppDatabase(NativeDatabase(file));
+      try {
+        final row = await database.select(database.analysisResults).getSingle();
+        expect(row.pitchMedianHz, metrics.pitchMedianHz);
+        expect(row.pitchRangeSt, metrics.pitchRangeSt);
+        expect(row.pitchStdSt, metrics.pitchStdSt);
+        expect(row.pitchMovementStS, metrics.pitchMovementStPerS);
+        expect(row.articulationRate, metrics.articulationRate);
+        expect(row.speakingRate, metrics.speakingRate);
+        expect(row.paceCv, metrics.paceCV);
+        expect(row.loudnessRangeDb, metrics.loudnessRangeDb);
+        expect(row.energyTrendDb, metrics.energyTrendDb);
+        expect(row.pausesPerMin, metrics.pausesPerMin);
+        expect(row.pauseRatio, metrics.pauseRatio);
+        expect(row.longPauseCount, metrics.longPauseCount);
+        expect(row.meanPauseMs, metrics.meanPauseMs);
+        expect(row.speechMs, metrics.speechMs);
+        expect(row.snrDb, metrics.snrDb);
+        expect(row.clippingPct, metrics.clippingPct);
+        expect(jsonDecode(row.pausesJson!), [
+          for (final pause in metrics.pauses) pause.toJson(),
+        ]);
+        expect(jsonDecode(row.contourJson!), [
+          for (final point in result.points) point.toJson(),
+        ]);
+        expect(jsonDecode(row.flagsJson!), ['phase1_metrics_only']);
+        expect([
+          row.scorePitch,
+          row.scorePace,
+          row.scorePaceVar,
+          row.scorePause,
+          row.scoreVolume,
+          row.scoreEnergy,
+          row.fillerCount,
+        ], everyElement(isNull));
+        final recording = await database
+            .select(database.recordings)
+            .getSingle();
+        expect(recording.overallScore, isNull);
+        expect(recording.analysisVersion, 4);
+        expect(await File(recording.audioPath).exists(), isTrue);
+      } finally {
+        await database.close();
+      }
+    },
+  );
+
+  test('failed quality checks persist warnings and clear unavailable metrics on retry', () async {
+    final database = AppDatabase(NativeDatabase.memory());
+    addTearDown(database.close);
+    final repository = RecordingRepository(database);
+    const draft = ClipDraft(
+      id: 'quality',
+      path: '/local/quality.wav',
+      createdAt: 1,
+      mode: RecordingMode.thirtySeconds,
+      language: 'en',
+    );
+    final config = loadAudioConfig();
+    await repository.saveCapture(draft, 14000, config);
+    await repository.savePitch(
+      draft,
+      analyzePitch(WavAudio(syllablePulses(), 16000), config),
+    );
+    final silence = WavAudio(
+      speechTone(durationSeconds: 14, silenceSeconds: 7),
+      16000,
+    );
+    await repository.savePitch(draft, analyzePitch(silence, config));
+    expect(await database.select(database.analysisResults).get(), hasLength(1));
+    final row = await database.select(database.analysisResults).getSingle();
+    expect(row.pitchMedianHz, isNull);
+    expect(row.pitchRangeSt, isNull);
+    expect(row.articulationRate, isNull);
+    expect(row.speakingRate, isNull);
+    expect(row.loudnessRangeDb, isNull);
+    expect(row.scorePitch, isNull);
+    expect(jsonDecode(row.pausesJson!), isEmpty);
+    expect(jsonDecode(row.flagsJson!), [
+      'phase1_metrics_only',
+      'insufficient_pitch',
+      'insufficient_speech',
+      'noisy_recording',
+    ]);
+  });
+
   test('capture and pitch-only analysis survive reopening without fabricating scores', () async {
     final directory = await Directory.systemTemp.createTemp(
       'speech_coach_recording_',

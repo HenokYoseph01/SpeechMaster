@@ -57,33 +57,64 @@ class RecordingRepository {
         );
   }
 
-  Future<void> savePitch(ClipDraft draft, PitchResult result) =>
-      database.transaction(() async {
-        await (database.update(database.recordings)
-              ..where((row) => row.id.equals(draft.id)))
-            .write(RecordingsCompanion(durationMs: Value(result.durationMs)));
-        await database
-            .into(database.analysisResults)
-            .insertOnConflictUpdate(
-              AnalysisResultsCompanion.insert(
-                recordingId: Value(draft.id),
-                pitchMedianHz: Value(result.medianHz),
-                speechMs: Value(result.speechMs),
-                contourJson: Value(
-                  jsonEncode([
-                    for (final point in result.points) point.toJson(),
-                  ]),
-                ),
-                flagsJson: Value(
-                  jsonEncode([
-                    'prototype_pitch_only',
-                    if (result.usedPitchFallback) 'pitch_periodicity_fallback',
-                    if (!result.hasPitch) 'insufficient_pitch',
-                  ]),
-                ),
-              ),
-            );
-      });
+  Future<void> savePitch(
+    ClipDraft draft,
+    PitchResult result,
+  ) => database.transaction(() async {
+    final metrics = result.analysis;
+    await (database.update(database.recordings)
+          ..where((row) => row.id.equals(draft.id)))
+        .write(RecordingsCompanion(durationMs: Value(result.durationMs)));
+    await database
+        .into(database.analysisResults)
+        .insertOnConflictUpdate(
+          AnalysisResultsCompanion.insert(
+            recordingId: Value(draft.id),
+            pitchMedianHz: Value(
+              metrics == null ? result.medianHz : metrics.pitchMedianHz,
+            ),
+            pitchRangeSt: Value(metrics?.pitchRangeSt),
+            pitchStdSt: Value(metrics?.pitchStdSt),
+            pitchMovementStS: Value(metrics?.pitchMovementStPerS),
+            articulationRate: Value(metrics?.articulationRate),
+            speakingRate: Value(metrics?.speakingRate),
+            paceCv: Value(metrics?.paceCV),
+            loudnessRangeDb: Value(metrics?.loudnessRangeDb),
+            energyTrendDb: Value(metrics?.energyTrendDb),
+            pausesPerMin: Value(metrics?.pausesPerMin),
+            pauseRatio: Value(metrics?.pauseRatio),
+            longPauseCount: Value(metrics?.longPauseCount),
+            meanPauseMs: Value(metrics?.meanPauseMs),
+            snrDb: Value(metrics?.snrDb),
+            clippingPct: Value(metrics?.clippingPct),
+            speechMs: Value(result.speechMs),
+            pausesJson: Value(
+              metrics == null
+                  ? null
+                  : jsonEncode([
+                      for (final pause in metrics.pauses) pause.toJson(),
+                    ]),
+            ),
+            contourJson: Value(
+              jsonEncode([for (final point in result.points) point.toJson()]),
+            ),
+            flagsJson: Value(
+              jsonEncode([
+                metrics == null
+                    ? 'prototype_pitch_only'
+                    : 'phase1_metrics_only',
+                if (result.usedPitchFallback) 'pitch_periodicity_fallback',
+                if (metrics == null
+                    ? !result.hasPitch
+                    : metrics.pitchRangeSt == null)
+                  'insufficient_pitch',
+                if (metrics != null)
+                  for (final warning in metrics.qualityWarnings) warning.code,
+              ]),
+            ),
+          ),
+        );
+  });
 }
 
 String _uuidV4() {

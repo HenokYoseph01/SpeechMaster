@@ -1,7 +1,8 @@
-# Recording and pitch-contour prototype
+# Recording and delivery measurements
 
-Phase 0 was accepted on a real Android phone. This task implements the first
-recording/pitch test requested at the end of the spec, within Phase 1.
+Phase 0 and the recording/pitch prototype were accepted on a real Android phone.
+This Phase 1 build extends that prototype with delivery measurements and quality
+checks.
 
 ## Try it on an Android phone
 
@@ -14,17 +15,23 @@ flutter run
    pitch. Let the countdown finish automatically.
 3. Verify that the microphone level responds and the countdown continues.
 4. Verify that a pitch chart appears after recording, with rises/falls and gaps
-   for unvoiced moments. No score is shown in this prototype.
+   for unvoiced moments. Below it, check detected speech time, pause counts,
+   estimated pace, volume variation and ending energy. No score is shown yet.
 5. Try finishing early: the finish button is unavailable before 10 seconds.
 6. Try the 60-second mode and verify its countdown stops automatically.
 7. Deny microphone permission and verify the explanation and Android app
    settings link. Returning from settings should allow another attempt.
 8. Background the app during a recording. The unfinished take is discarded
    and the app explains the interruption; the microphone should stop.
+9. Include a few deliberate pauses between sentences. Opening and closing
+   silence should not be counted as pauses.
+10. Try a quiet take or finish with less than 10 seconds of detected speech.
+    Check the encouraging quality warning. The chart remains a preview; a
+    warning does not delete the recording.
 
 The chart has a screen-reader summary. English/Amharic and system text scaling
-are supported. User confirmation of the microphone/contour check is required
-before accepting the prototype.
+are supported. The user accepted the microphone/contour prototype. The new
+summary still needs a real-phone check.
 
 ## What runs locally
 
@@ -50,6 +57,20 @@ before accepting the prototype.
   passing quality scores.
 - The WAV and metadata are saved in the existing local tables and files folder.
   Analysis errors preserve the captured WAV for a retry.
+- Version 4 adds internal pauses (at least 250 ms), a 300–2500 Hz syllable
+  band-pass and 40 ms energy smoothing, voiced peaks at least 100 ms apart,
+  speaking/articulation rates and 5-second pace windows with at least 2 seconds
+  of speech. These are language-independent estimates, not transcription.
+- Loudness range is p95 minus p20 of speech dB; ending energy compares the
+  last and first third of speech. Full pitch statistics still require 30%
+  voiced speech frames, independently of the working preview chart.
+- Quality checks flag insufficient speech, low SNR, clipping and quiet audio.
+  Clipping means a PCM16 endpoint (absolute amplitude at least 32767/32768);
+  `clippingPct` is a percentage, while `pauseRatio` is a fraction.
+- Pause durations below 600 ms are short; 600–1500 ms are medium; over 1500 ms
+  are long. Pace CV uses population standard deviation over eligible windows
+  and stays null with fewer than two windows or a zero mean. Pitch movement
+  uses adjacent voiced frames and never bridges an unvoiced gap.
 
 Tunable parameters are in `assets/audio_config.json`. Only the two recording
 modes in the spec are exposed. No schema, scoring formula, coach flag, or network
@@ -57,19 +78,26 @@ behavior changed in this task.
 
 ## Scope and verification
 
-Pitch-only rows carry `prototype_pitch_only` in `flags_json`, and all scores
-remain null. Chart fallback rows also carry `pitch_periodicity_fallback` and
-retain the original VAD speech-time estimate. This is analysis version 3; the
-approved exception is documented in the phase assignment. Audio remains available
-for re-analysis as Phase 1 is completed;
-increment `analysisVersion` when the pipeline changes. No pause/pace/volume
-metrics, full quality gates, playback, results scoring, or coaching tips are
-implemented by this task.
+Older pitch-only rows carry `prototype_pitch_only` in `flags_json`. New version 4
+rows carry `phase1_metrics_only` plus applicable quality-warning codes, with all
+scores and filler counts null. Fallback rows also carry
+`pitch_periodicity_fallback` and retain the original VAD speech-time estimate.
+`insufficient_pitch` indicates unavailable full pitch metrics even if the
+preview still draws some segments. Audio remains available for later re-analysis;
+old results are not automatically rewritten. Playback, scoring and coaching tips
+are later work.
+
+The existing adaptive VAD can underestimate continuous speech when there is
+little silence from which to estimate a noise floor. The chart-only fallback
+does not override speech time, pace or quality gates. Treat pace as approximate;
+real English/Amharic recordings still need calibration before coaching or scores.
 
 The automated suite checks tones across 70–400 Hz with less than one semitone
 error, a 120–240 Hz glide, silence/noise, low-pass attenuation, padded/truncated
 WAV chunks, progress/errors from an isolate, recording limits and interruptions,
-analysis retry/cleanup, persisted metadata, and large Amharic text.
+analysis retry/cleanup, persisted metrics/quality flags, pause timing within
+50 ms, signed volume ramps, known syllable pulses, quality gate boundaries,
+60-second full-isolate analysis and large English/Amharic summary text.
 
 For phone timing, Flutter's console prints `Pitch prototype analysis: N ms`.
 Host test timings are diagnostics only. The complete 60-second pipeline's

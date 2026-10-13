@@ -35,6 +35,8 @@ void main() {
         greaterThanOrEqualTo(config.chartMinimumVoicedRatio),
       );
       expect(result.voicedRatio, lessThan(config.minimumVoicedRatio));
+      expect(result.analysis!.pitchRangeSt, isNull);
+      expect(result.analysis!.pitchMedianHz, isNull);
       expect(result.medianHz, closeTo(150, 3));
       expect(
         result.points.where((p) => p.semitones == null).length,

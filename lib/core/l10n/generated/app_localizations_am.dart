@@ -86,7 +86,7 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get recordPrivacy =>
-      'ቅጂዎ በዚህ ስልክ ላይ ይቀመጣል። ማይክሮፎኑን የድምፅዎን ቅላፄ እንቅስቃሴ ለመሳል እንጠቀማለን።';
+      'ቅጂዎ በዚህ ስልክ ላይ ይቀመጣል። ቅላፄን፣ ፍጥነትን፣ እረፍቶችንና የድምፅ መጠንን በስልኩ ላይ እንለካለን።';
 
   @override
   String durationSeconds(int seconds) {
@@ -125,7 +125,7 @@ class AppLocalizationsAm extends AppLocalizations {
   String get finishingRecording => 'ቀረጻዎን በማጠናቀቅ ላይ…';
 
   @override
-  String get analyzingPitch => 'የድምፅዎን እንቅስቃሴ በመሳል ላይ…';
+  String get analyzingPitch => 'ቅላፄን፣ ፍጥነትን፣ እረፍቶችንና የድምፅ መጠንን በመተንተን ላይ…';
 
   @override
   String get discardingRecording => 'ይህን ቅጂ በማስወገድ ላይ…';
@@ -145,14 +145,14 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get pitchAnalysisFailed =>
-      'ድምፅዎ አሁንም በዚህ ስልክ ላይ ነው። የቅላፄ ግራፉን ማጠናቀቅ አልተቻለም። እባክዎ እንደገና ይሞክሩ።';
+      'ድምፅዎ አሁንም በዚህ ስልክ ላይ ነው። ትንተናውን ማጠናቀቅ አልተቻለም። እባክዎ እንደገና ይሞክሩ።';
 
   @override
   String get recordingSaveFailed =>
       'ድምፅዎ አሁንም በዚህ ስልክ ላይ ነው። ወደ ልምምድዎ ማከል አልተቻለም። እባክዎ እንደገና ይሞክሩ።';
 
   @override
-  String get retryPitchAnalysis => 'ግራፉን እንደገና ይሳሉ';
+  String get retryPitchAnalysis => 'ትንተናውን እንደገና ይሞክሩ';
 
   @override
   String get recordingSaved => 'ልምምድዎ በዚህ ስልክ ላይ ተቀምጧል።';
@@ -178,4 +178,93 @@ class AppLocalizationsAm extends AppLocalizations {
 
   @override
   String get recordingDuration => 'የቀረጻ ርዝመት';
+
+  @override
+  String get deliverySummaryTitle => 'የንግግርዎ አጭር መግለጫ';
+
+  @override
+  String get deliveryPreviewNote => 'እነዚህ ለአሁኑ መለኪያዎች ናቸው። ልምምድዎ ገና ውጤት የለውም።';
+
+  @override
+  String get deliveryQualityTitle => 'ለቀጣይ ግልጽ ቅጂ';
+
+  @override
+  String get qualityMoreSpeech => 'ለመለካት የሚበቃ ንግግር እንዲኖር ትንሽ ረዘም ብለው ይናገሩ።';
+
+  @override
+  String get qualityQuieterRoom =>
+      'የጀርባ ድምፅ ከእርስዎ ድምፅ መጠን ጋር ተቀራራቢ ነው። ይበልጥ ፀጥ ያለ ቦታ ይሞክሩ።';
+
+  @override
+  String get qualityStepBack =>
+      'አንዳንድ ድምፆች የማይክሮፎኑን ከፍተኛ ወሰን ነክተዋል። ትንሽ ራቅ ብለው በተፈጥሮ ድምፅዎ ይናገሩ።';
+
+  @override
+  String get qualityMoveCloser => 'ቅጂው ዝቅተኛ ድምፅ አለው። ወደ ማይክሮፎኑ ትንሽ ይቅረቡ።';
+
+  @override
+  String detectedSpeech(String seconds) {
+    return 'የተገኘ ንግግር፦ $seconds ሰ';
+  }
+
+  @override
+  String deliveryPauses(int count, String seconds) {
+    return '$count እረፍቶች፣ በድምሩ $seconds ሰ';
+  }
+
+  @override
+  String deliveryPauseKinds(int short, int medium, int long) {
+    return '$short አጫጭር፣ $medium መካከለኛ፣ $long ረጅም';
+  }
+
+  @override
+  String deliveryPauseShare(String percent) {
+    return 'በእረፍት ያለፈ ጊዜ፦ $percent';
+  }
+
+  @override
+  String deliverySpeakingRate(String rate) {
+    return 'የተገመተ ፍጥነት፦ $rate ክፍለ ድምፆች/ሰ';
+  }
+
+  @override
+  String deliveryArticulationRate(String rate) {
+    return 'በመናገር ጊዜ፦ $rate ክፍለ ድምፆች/ሰ';
+  }
+
+  @override
+  String deliveryApproximateWpm(String rate) {
+    return 'ለእንግሊዝኛ በግምት $rate ቃላት/ደቂቃ';
+  }
+
+  @override
+  String deliveryPaceVariation(String percent) {
+    return 'የፍጥነት ልዩነት፦ $percent';
+  }
+
+  @override
+  String deliveryVolumeRange(String range) {
+    return 'የድምፅ መጠን ልዩነት፦ $range dB';
+  }
+
+  @override
+  String deliveryEnergyTrend(String trend) {
+    return 'የመጨረሻ ድምፅ ከመጀመሪያው አንፃር፦ $trend dB';
+  }
+
+  @override
+  String deliveryPitchRange(String range) {
+    return 'የቅላፄ ክልል፦ $range ሴሚቶኖች';
+  }
+
+  @override
+  String get deliveryPitchLimited =>
+      'አንዳንድ የቅላፄ መለኪያዎች አልተገኙም። ግራፉ ግልጽ ክፍሎችን አሁንም ማሳየት ይችላል።';
+
+  @override
+  String get deliveryPaceUnavailable => 'ፍጥነትን ለመገመት የሚበቁ ባለቅላፄ ድምፆች አልተገኙም።';
+
+  @override
+  String get deliveryPaceExplanation =>
+      'ፍጥነት ከባለቅላፄ ድምፆች ይገመታል። ግልጽ ያልሆኑ ድምፆች ሊያመልጡ ይችላሉ፤ ይህ የቃላት ቆጠራ አይደለም። በመጀመሪያና በመጨረሻ ያለው ዝምታ እንደ እረፍት አይቆጠርም።';
 }

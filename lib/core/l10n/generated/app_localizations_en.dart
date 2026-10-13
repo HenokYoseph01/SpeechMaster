@@ -88,7 +88,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recordPrivacy =>
-      'Your recording stays on this phone. We use the microphone to draw how your pitch moves.';
+      'Your recording stays on this phone. We measure pitch, pace, pauses, and volume locally.';
 
   @override
   String durationSeconds(int seconds) {
@@ -127,7 +127,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get finishingRecording => 'Finishing your recording…';
 
   @override
-  String get analyzingPitch => 'Drawing the movement in your voice…';
+  String get analyzingPitch => 'Listening for pitch, pace, pauses, and volume…';
 
   @override
   String get discardingRecording => 'Putting that take aside…';
@@ -149,14 +149,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pitchAnalysisFailed =>
-      'Your audio is still on this phone. The pitch chart couldn\'t finish. Please try again.';
+      'Your audio is still on this phone. The analysis couldn\'t finish. Please try again.';
 
   @override
   String get recordingSaveFailed =>
       'Your audio is still on this phone. It couldn\'t be added to your practice. Please try again.';
 
   @override
-  String get retryPitchAnalysis => 'Try drawing the chart again';
+  String get retryPitchAnalysis => 'Try the analysis again';
 
   @override
   String get recordingSaved => 'Your practice is saved on this phone.';
@@ -182,4 +182,97 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recordingDuration => 'Recording length';
+
+  @override
+  String get deliverySummaryTitle => 'Your delivery at a glance';
+
+  @override
+  String get deliveryPreviewNote =>
+      'These are measurements for now. Your practice doesn\'t have a score yet.';
+
+  @override
+  String get deliveryQualityTitle => 'For a clearer next take';
+
+  @override
+  String get qualityMoreSpeech =>
+      'Try speaking for a little longer so there is enough speech to measure.';
+
+  @override
+  String get qualityQuieterRoom =>
+      'Background sound is close to your voice level. Try a quieter spot.';
+
+  @override
+  String get qualityStepBack =>
+      'Some sound reached the microphone\'s limit. Try speaking naturally a little farther away.';
+
+  @override
+  String get qualityMoveCloser =>
+      'The recording is quiet. Try moving a little closer to the microphone.';
+
+  @override
+  String detectedSpeech(String seconds) {
+    return 'Speech detected: $seconds s';
+  }
+
+  @override
+  String deliveryPauses(int count, String seconds) {
+    return '$count pauses, lasting $seconds s in total';
+  }
+
+  @override
+  String deliveryPauseKinds(int short, int medium, int long) {
+    return '$short short, $medium medium, $long long';
+  }
+
+  @override
+  String deliveryPauseShare(String percent) {
+    return 'Time in pauses: $percent';
+  }
+
+  @override
+  String deliverySpeakingRate(String rate) {
+    return 'Estimated pace: $rate syllables/s';
+  }
+
+  @override
+  String deliveryArticulationRate(String rate) {
+    return 'While speaking: $rate syllables/s';
+  }
+
+  @override
+  String deliveryApproximateWpm(String rate) {
+    return 'Approximately $rate words/min for English';
+  }
+
+  @override
+  String deliveryPaceVariation(String percent) {
+    return 'Pace variation: $percent';
+  }
+
+  @override
+  String deliveryVolumeRange(String range) {
+    return 'Volume variation: $range dB';
+  }
+
+  @override
+  String deliveryEnergyTrend(String trend) {
+    return 'Ending energy: $trend dB compared with the start';
+  }
+
+  @override
+  String deliveryPitchRange(String range) {
+    return 'Pitch range: $range semitones';
+  }
+
+  @override
+  String get deliveryPitchLimited =>
+      'Some pitch measurements aren\'t available. The chart can still show clear segments.';
+
+  @override
+  String get deliveryPaceUnavailable =>
+      'There weren\'t enough voiced sounds to estimate pace.';
+
+  @override
+  String get deliveryPaceExplanation =>
+      'Pace is estimated from voiced sounds. Unclear sounds can be missed; this isn\'t a word count. Opening and closing silence aren\'t counted as pauses.';
 }

@@ -10,11 +10,11 @@ class AudioConfig {
         throw FormatException('Expected a positive integer for $key');
       }
     }
-    for (final entry in values.entries) {
-      final value = entry.value;
+    for (final key in {...values.keys, ..._integerKeys, ..._numberKeys}) {
+      final value = values[key];
       if (value is! num ||
           !value.isFinite ||
-          (entry.key != 'waveformFloorDb' && value <= 0)) {
+          (!_negativeKeys.contains(key) && value <= 0)) {
         throw const FormatException(
           'Audio settings must be positive finite numbers',
         );
@@ -24,6 +24,7 @@ class AudioConfig {
         pitchSampleRate != 8000 ||
         minimumRecordingMs != 10000 ||
         waveformFloorDb >= 0 ||
+        qualityQuietFrameDb >= 0 ||
         lowPassTaps < 3 ||
         lowPassTaps.isEven ||
         energyMedianFrames.isEven ||
@@ -35,6 +36,19 @@ class AudioConfig {
         minimumVoicedRatio > 1 ||
         chartMinimumVoicedRatio > minimumVoicedRatio ||
         noiseFloorPercentile > 100 ||
+        clippingSampleThreshold > 1 ||
+        qualityMaximumClippingPct > 100 ||
+        pauseMinimumMs >= pauseShortUpperMs ||
+        pauseShortUpperMs >= pauseMediumUpperMs ||
+        syllableBandLowHz >= syllableBandHighHz ||
+        syllableBandHighHz >= captureSampleRate / 2 ||
+        syllableSmoothMs < energyHopMs ||
+        paceMinimumSpeechMs > paceWindowMs ||
+        pitchRangeLowPercentile >= pitchRangeHighPercentile ||
+        pitchRangeHighPercentile > 100 ||
+        loudnessLowPercentile >= loudnessHighPercentile ||
+        loudnessHighPercentile > 100 ||
+        qualitySnrPercentile > 100 ||
         energyHopMs > energyFrameMs ||
         pitchHopMs > pitchFrameMs ||
         pitchFrameSamples <= (pitchSampleRate / pitchMinimumHz).ceil() * 2 ||
@@ -63,6 +77,41 @@ class AudioConfig {
     'contourPointsPerSecond',
     'lowPassTaps',
     'waveformHistoryPoints',
+    'pauseMinimumMs',
+    'pauseShortUpperMs',
+    'pauseMediumUpperMs',
+    'syllableSmoothMs',
+    'syllableMinimumGapMs',
+    'paceWindowMs',
+    'paceMinimumSpeechMs',
+    'qualityMinimumSpeechMs',
+  ];
+  static const _negativeKeys = {'waveformFloorDb', 'qualityQuietFrameDb'};
+  static const _numberKeys = [
+    'rmsEpsilon',
+    'noiseFloorPercentile',
+    'speechMarginDb',
+    'pitchMinimumHz',
+    'pitchMaximumHz',
+    'yinThreshold',
+    'octaveJumpSemitones',
+    'minimumVoicedRatio',
+    'chartMinimumVoicedRatio',
+    'lowPassCutoffHz',
+    'chartMinimumSpanSemitones',
+    'waveformFloorDb',
+    'syllableBandLowHz',
+    'syllableBandHighHz',
+    'qualityMinimumSnrDb',
+    'qualityMaximumClippingPct',
+    'clippingSampleThreshold',
+    'qualityQuietFrameDb',
+    'pitchRangeLowPercentile',
+    'pitchRangeHighPercentile',
+    'loudnessLowPercentile',
+    'loudnessHighPercentile',
+    'qualitySnrPercentile',
+    'englishSyllablesPerWord',
   ];
   int _int(String key) => (values[key] as num).toInt();
   double _double(String key) => (values[key] as num).toDouble();
@@ -96,6 +145,26 @@ class AudioConfig {
   double get chartMinimumSpanSemitones => _double('chartMinimumSpanSemitones');
   double get waveformFloorDb => _double('waveformFloorDb');
   int get waveformHistoryPoints => _int('waveformHistoryPoints');
+  int get pauseMinimumMs => _int('pauseMinimumMs');
+  int get pauseShortUpperMs => _int('pauseShortUpperMs');
+  int get pauseMediumUpperMs => _int('pauseMediumUpperMs');
+  double get syllableBandLowHz => _double('syllableBandLowHz');
+  double get syllableBandHighHz => _double('syllableBandHighHz');
+  int get syllableSmoothMs => _int('syllableSmoothMs');
+  int get syllableMinimumGapMs => _int('syllableMinimumGapMs');
+  int get paceWindowMs => _int('paceWindowMs');
+  int get paceMinimumSpeechMs => _int('paceMinimumSpeechMs');
+  int get qualityMinimumSpeechMs => _int('qualityMinimumSpeechMs');
+  double get qualityMinimumSnrDb => _double('qualityMinimumSnrDb');
+  double get qualityMaximumClippingPct => _double('qualityMaximumClippingPct');
+  double get clippingSampleThreshold => _double('clippingSampleThreshold');
+  double get qualityQuietFrameDb => _double('qualityQuietFrameDb');
+  double get pitchRangeLowPercentile => _double('pitchRangeLowPercentile');
+  double get pitchRangeHighPercentile => _double('pitchRangeHighPercentile');
+  double get loudnessLowPercentile => _double('loudnessLowPercentile');
+  double get loudnessHighPercentile => _double('loudnessHighPercentile');
+  double get qualitySnrPercentile => _double('qualitySnrPercentile');
+  double get englishSyllablesPerWord => _double('englishSyllablesPerWord');
   int get pitchFrameSamples => pitchSampleRate * pitchFrameMs ~/ 1000;
   int get pitchHopSamples => pitchSampleRate * pitchHopMs ~/ 1000;
 }

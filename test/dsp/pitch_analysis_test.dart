@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
 import 'dart:typed_data';
@@ -36,6 +37,8 @@ void main() {
         config,
       );
       expect(result.hasPitch, isTrue);
+      expect(result.analysis, isNotNull);
+      expect(result.analysis!.speechMs, result.speechMs);
       final start = result.points
           .where((point) => point.timeMs >= 600 && point.timeMs <= 1000)
           .map((point) => point.semitones)
@@ -104,6 +107,8 @@ void main() {
       }
       final result = events.whereType<PitchComplete>().single.result;
       expect(result.durationMs, 30000);
+      expect(result.analysis!.passesQualityGates, isTrue);
+      expect(result.analysis!.pitchRangeSt, greaterThan(8));
       expect(result.points.length, 300);
       expect(result.medianHz, closeTo(180, 5));
       expect(result.hasPitch, isTrue);
@@ -118,6 +123,40 @@ void main() {
       analyzeWavInIsolate('/missing/speech-coach.wav', config).toList(),
       throwsStateError,
     );
+  });
+  test('60-second full analysis streams progress while the caller stays responsive', () async {
+    final directory = await Directory.systemTemp.createTemp(
+      'speech_coach_full_',
+    );
+    addTearDown(() => directory.delete(recursive: true));
+    final file = File('${directory.path}/clip.wav');
+    await file.writeAsBytes(makeWav(syllablePulses(durationSeconds: 60)));
+    var heartbeats = 0;
+    final timer = Timer.periodic(const Duration(milliseconds: 1), (_) {
+      heartbeats++;
+    });
+    addTearDown(timer.cancel);
+    final events = await analyzeWavInIsolate(file.path, config).toList();
+    timer.cancel();
+    final result = events.whereType<PitchComplete>().single.result;
+    expect(result.durationMs, 60000);
+    expect(result.analysis!.syllableCount, 232);
+    expect(result.analysis!.passesQualityGates, isTrue);
+    expect(result.analysis!.paceWindows, hasLength(12));
+    expect(result.points, hasLength(600));
+    expect(heartbeats, greaterThan(0));
+    final progress = events
+        .whereType<PitchProgress>()
+        .map((p) => p.value)
+        .toList();
+    expect(progress.first, 0);
+    expect(progress.last, 1);
+    for (var i = 1; i < progress.length; i++) {
+      expect(progress[i], greaterThanOrEqualTo(progress[i - 1]));
+    }
+    // Host timing is diagnostic, not low-end Android performance acceptance.
+    // ignore: avoid_print
+    print('60-second full analysis on test host: ${result.analysisMs} ms');
   });
   test('audio config rejects fractional hops and changed capture format', () {
     expect(

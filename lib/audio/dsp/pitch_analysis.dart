@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import '../audio_config.dart';
 import '../pitch_result.dart';
 import 'downsample.dart';
+import 'metrics.dart';
 import 'statistics.dart';
 import 'vad.dart';
 import 'wav.dart';
@@ -39,12 +40,13 @@ PitchResult analyzePitch(
       onProgress?.call(0.4 + 0.3 * offset / math.max(1, samples.length));
     }
   }
-  var selected = _prepareContour(
+  final primary = _prepareContour(
     hz,
     speechPitchFrames,
     config,
     minimumRatio: config.chartMinimumVoicedRatio,
   );
+  var selected = primary;
   var usedPitchFallback = false;
   onProgress?.call(0.75);
   if (!selected.usable && hz.isNotEmpty) {
@@ -102,6 +104,15 @@ PitchResult analyzePitch(
       ),
     );
   }
+  onProgress?.call(0.96);
+  final analysis = measureDelivery(
+    audio,
+    energy,
+    _smoothContour(primary.contour, config),
+    primary.medianHz,
+    primary.ratio,
+    config,
+  );
   onProgress?.call(1);
   return PitchResult(
     durationMs: audio.durationMs,
@@ -113,6 +124,7 @@ PitchResult analyzePitch(
     analysisMs: watch.elapsedMilliseconds,
     noiseFloorDb: energy.noiseFloorDb,
     usedPitchFallback: usedPitchFallback,
+    analysis: analysis,
   );
 }
 

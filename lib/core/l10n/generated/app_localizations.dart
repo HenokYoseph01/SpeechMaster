@@ -251,7 +251,7 @@ abstract class AppLocalizations {
   /// No description provided for @recordPrivacy.
   ///
   /// In en, this message translates to:
-  /// **'Your recording stays on this phone. We use the microphone to draw how your pitch moves.'**
+  /// **'Your recording stays on this phone. We measure pitch, pace, pauses, and volume locally.'**
   String get recordPrivacy;
 
   /// No description provided for @durationSeconds.
@@ -317,7 +317,7 @@ abstract class AppLocalizations {
   /// No description provided for @analyzingPitch.
   ///
   /// In en, this message translates to:
-  /// **'Drawing the movement in your voice…'**
+  /// **'Listening for pitch, pace, pauses, and volume…'**
   String get analyzingPitch;
 
   /// No description provided for @discardingRecording.
@@ -353,7 +353,7 @@ abstract class AppLocalizations {
   /// No description provided for @pitchAnalysisFailed.
   ///
   /// In en, this message translates to:
-  /// **'Your audio is still on this phone. The pitch chart couldn\'t finish. Please try again.'**
+  /// **'Your audio is still on this phone. The analysis couldn\'t finish. Please try again.'**
   String get pitchAnalysisFailed;
 
   /// No description provided for @recordingSaveFailed.
@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// No description provided for @retryPitchAnalysis.
   ///
   /// In en, this message translates to:
-  /// **'Try drawing the chart again'**
+  /// **'Try the analysis again'**
   String get retryPitchAnalysis;
 
   /// No description provided for @recordingSaved.
@@ -409,6 +409,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recording length'**
   String get recordingDuration;
+
+  /// No description provided for @deliverySummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your delivery at a glance'**
+  String get deliverySummaryTitle;
+
+  /// No description provided for @deliveryPreviewNote.
+  ///
+  /// In en, this message translates to:
+  /// **'These are measurements for now. Your practice doesn\'t have a score yet.'**
+  String get deliveryPreviewNote;
+
+  /// No description provided for @deliveryQualityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'For a clearer next take'**
+  String get deliveryQualityTitle;
+
+  /// No description provided for @qualityMoreSpeech.
+  ///
+  /// In en, this message translates to:
+  /// **'Try speaking for a little longer so there is enough speech to measure.'**
+  String get qualityMoreSpeech;
+
+  /// No description provided for @qualityQuieterRoom.
+  ///
+  /// In en, this message translates to:
+  /// **'Background sound is close to your voice level. Try a quieter spot.'**
+  String get qualityQuieterRoom;
+
+  /// No description provided for @qualityStepBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Some sound reached the microphone\'s limit. Try speaking naturally a little farther away.'**
+  String get qualityStepBack;
+
+  /// No description provided for @qualityMoveCloser.
+  ///
+  /// In en, this message translates to:
+  /// **'The recording is quiet. Try moving a little closer to the microphone.'**
+  String get qualityMoveCloser;
+
+  /// No description provided for @detectedSpeech.
+  ///
+  /// In en, this message translates to:
+  /// **'Speech detected: {seconds} s'**
+  String detectedSpeech(String seconds);
+
+  /// No description provided for @deliveryPauses.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} pauses, lasting {seconds} s in total'**
+  String deliveryPauses(int count, String seconds);
+
+  /// No description provided for @deliveryPauseKinds.
+  ///
+  /// In en, this message translates to:
+  /// **'{short} short, {medium} medium, {long} long'**
+  String deliveryPauseKinds(int short, int medium, int long);
+
+  /// No description provided for @deliveryPauseShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Time in pauses: {percent}'**
+  String deliveryPauseShare(String percent);
+
+  /// No description provided for @deliverySpeakingRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated pace: {rate} syllables/s'**
+  String deliverySpeakingRate(String rate);
+
+  /// No description provided for @deliveryArticulationRate.
+  ///
+  /// In en, this message translates to:
+  /// **'While speaking: {rate} syllables/s'**
+  String deliveryArticulationRate(String rate);
+
+  /// No description provided for @deliveryApproximateWpm.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximately {rate} words/min for English'**
+  String deliveryApproximateWpm(String rate);
+
+  /// No description provided for @deliveryPaceVariation.
+  ///
+  /// In en, this message translates to:
+  /// **'Pace variation: {percent}'**
+  String deliveryPaceVariation(String percent);
+
+  /// No description provided for @deliveryVolumeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Volume variation: {range} dB'**
+  String deliveryVolumeRange(String range);
+
+  /// No description provided for @deliveryEnergyTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Ending energy: {trend} dB compared with the start'**
+  String deliveryEnergyTrend(String trend);
+
+  /// No description provided for @deliveryPitchRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch range: {range} semitones'**
+  String deliveryPitchRange(String range);
+
+  /// No description provided for @deliveryPitchLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Some pitch measurements aren\'t available. The chart can still show clear segments.'**
+  String get deliveryPitchLimited;
+
+  /// No description provided for @deliveryPaceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'There weren\'t enough voiced sounds to estimate pace.'**
+  String get deliveryPaceUnavailable;
+
+  /// No description provided for @deliveryPaceExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Pace is estimated from voiced sounds. Unclear sounds can be missed; this isn\'t a word count. Opening and closing silence aren\'t counted as pauses.'**
+  String get deliveryPaceExplanation;
 }
 
 class _AppLocalizationsDelegate

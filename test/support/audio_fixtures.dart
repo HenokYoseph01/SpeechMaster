@@ -44,6 +44,29 @@ Float32List speechTone({
   return output;
 }
 
+Float32List syllablePulses({
+  double durationSeconds = 14,
+  double ratePerSecond = 4,
+}) {
+  const rate = 16000;
+  final output = Float32List((durationSeconds * rate).round());
+  final period = 1 / ratePerSecond;
+  final width = math.min(0.15, period * 0.7);
+  for (var i = rate; i < output.length - rate; i++) {
+    final time = (i - rate) / rate;
+    final local = time % period;
+    if (local >= width) continue;
+    final envelope = (1 - math.cos(2 * math.pi * local / width)) / 2;
+    final phase = 2 * math.pi * 160 * i / rate;
+    output[i] =
+        envelope *
+        (0.3 * math.sin(phase) +
+            0.2 * math.sin(2 * phase) +
+            0.1 * math.sin(4 * phase));
+  }
+  return output;
+}
+
 Uint8List makeWav(
   Float32List samples, {
   int sampleRate = 16000,

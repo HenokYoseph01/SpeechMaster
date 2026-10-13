@@ -48,8 +48,19 @@ Future<void> main() async {
         'hasPitch=${result.hasPitch} median=${result.medianHz} '
         'ratio=${result.voicedRatio} speech=${result.speechMs} '
         'points=${result.points.where((p) => p.semitones != null).length} '
-        'fallback=${result.usedPitchFallback}',
+        'fallback=${result.usedPitchFallback} analysisMs=${result.analysisMs}',
       );
+      final metrics = result.analysis;
+      if (metrics != null) {
+        debugPrint(
+          'PHONE_METRICS clip=$index '
+          'pauses=${metrics.pauses.length} syllables=${metrics.syllableCount} '
+          'speakingRate=${metrics.speakingRate} articulationRate=${metrics.articulationRate} '
+          'loudnessRange=${metrics.loudnessRangeDb} energyTrend=${metrics.energyTrendDb} '
+          'snr=${metrics.snrDb} clippingPct=${metrics.clippingPct} '
+          'warnings=${metrics.qualityWarnings.map((w) => w.code).join(",")}',
+        );
+      }
     } catch (error, stack) {
       debugPrint('PHONE_PITCH clip=$index error=$error\n$stack');
     }

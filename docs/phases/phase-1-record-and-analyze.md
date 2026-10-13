@@ -4,7 +4,7 @@ Read `docs/SPEC.md`: Decisions, Stack and project layout, Audio pipeline,
 Data model, Design system, Build phases (Phase 1), and the final prototype note.
 Follow `AGENTS.md`. Phase 0 was accepted by the user on a real Android phone.
 
-## Current task: recording and pitch-contour prototype
+## Completed task: recording and pitch-contour prototype
 
 - [x] WAV PCM16 capture at 16 kHz mono, processing effects off, microphone permission handling.
 - [x] Default 30-second recording, with only 30/60-second modes, countdown,
@@ -14,9 +14,10 @@ Follow `AGENTS.md`. Phase 0 was accepted by the user on a real Android phone.
   and chart data at 10 points/second.
 - [x] Show a localized, accessible pitch chart and keep audio on the phone.
 - [x] Synthetic tone, glide, silence, WAV, isolate, and recorder control tests.
-- [ ] Real-phone microphone/contour acceptance, reported by the user.
+- [x] Real-phone microphone/contour acceptance, reported by the user on 2026-10-13.
 
-Save recording metadata and pitch-only analysis in the existing tables. Do not
+The initial prototype saved recording metadata and pitch-only analysis. The
+current assignment below extends it using the existing analysis columns. Do not
 change the schema or scoring formula. No overall score is shown or saved.
 Keep tunable DSP/recorder parameters in `assets/audio_config.json`.
 
@@ -45,12 +46,32 @@ Unvoiced gaps remain gaps, and isolated chart points are drawn visibly. These
 preview settings do not implement or relax scoring quality gates. A dedicated
 diagnostic entry point analyzes saved audio entirely on the phone.
 
-## Remaining Phase 1 tasks
+## Current task: delivery measurements and quality checks
 
-- [ ] Pauses, syllable rate, windowed pace, remaining metrics and full quality gates.
-- [ ] Full pipeline synthetic audio acceptance tests from the spec.
+The user approved proceeding after confirming the pitch preview works.
+
+- [x] Pauses between speech segments, excluding opening/closing silence, with
+  short/medium/long classification and replay-ready local intervals.
+- [x] Voiced energy-peak syllable estimates, speaking/articulation rates, 5-second
+  pace windows and pace CV; English-only approximate words per minute.
+- [x] Speech-frame loudness range, first/last-third energy trend and full pitch
+  metrics only when at least 30% of speech pitch frames are voiced.
+- [x] Quality warnings for speech under 10 seconds, SNR under 15 dB, clipping
+  over 1% and loudest speech below -35 dBFS. Keep scores null.
+- [x] One-isolate analysis, progress, existing-table persistence and a localized
+  measurement summary below the chart; analysis version 4.
+- [x] Synthetic acceptance coverage for pauses, amplitude trends, syllable pulses,
+  quality boundaries, silence/noise and 60-second isolate responsiveness.
+
+The preview-only exceptions from versions 2/3 still apply. Do not use the relaxed
+chart threshold or periodicity fallback to qualify full pitch metrics. Keep all
+analysis thresholds in `assets/audio_config.json`; no dependencies are needed.
+
+## Remaining Phase 1 acceptance
+
+- [ ] User checks the new measurement summary and quality warnings on a real phone.
 - [ ] A 60-second clip analyzed in under 3 seconds on a low-end phone,
   with UI responsiveness checked in profile mode.
 
-Complete this prototype before starting the remaining tasks. Do not begin
-Phase 2 or later assignments.
+Host timings and an event-loop responsiveness test do not satisfy the low-end
+phone / 60 fps acceptance check. Do not begin Phase 2 or later assignments.
