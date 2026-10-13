@@ -42,6 +42,12 @@ before accepting the prototype.
 - The chart stores 10 points per second using the median of voiced frames in each
   time bucket, preserving fully unvoiced gaps. Too little voiced speech produces a
   localized suggestion to try again, rather than an invented contour.
+- Version 3 separates preview acceptance from whole-clip fallback acceptance:
+  speech-gated previews require 10% valid frames, while the fallback still
+  requires 30% across the clip. The YIN threshold is 0.25, calibrated against
+  failed recordings on the connected phone. Sparse measured points are visible
+  as dots; no line bridges an unvoiced gap. These are pitch-only previews, not
+  passing quality scores.
 - The WAV and metadata are saved in the existing local tables and files folder.
   Analysis errors preserve the captured WAV for a retry.
 
@@ -53,7 +59,7 @@ behavior changed in this task.
 
 Pitch-only rows carry `prototype_pitch_only` in `flags_json`, and all scores
 remain null. Chart fallback rows also carry `pitch_periodicity_fallback` and
-retain the original VAD speech-time estimate. This is analysis version 2; the
+retain the original VAD speech-time estimate. This is analysis version 3; the
 approved exception is documented in the phase assignment. Audio remains available
 for re-analysis as Phase 1 is completed;
 increment `analysisVersion` when the pipeline changes. No pause/pace/volume
@@ -69,3 +75,9 @@ For phone timing, Flutter's console prints `Pitch prototype analysis: N ms`.
 Host test timings are diagnostics only. The complete 60-second pipeline's
 under-3-second low-end-phone and 60 fps acceptance checks remain Phase 1 tasks;
 use `flutter run --profile` for those later checks.
+
+To diagnose existing recordings without copying audio off the phone, run
+`flutter run -t tool/phone_pitch_diagnostics.dart`. It opens the normal app and
+analyzes saved WAVs without changing the database, logging aggregate signal
+levels, pitch coverage, and errors. Run `flutter run` afterward to restore the
+normal entry point. The diagnostic tool is not part of normal app startup.

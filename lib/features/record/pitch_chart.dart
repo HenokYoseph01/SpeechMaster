@@ -116,6 +116,7 @@ class PitchContourPainter extends CustomPainter {
         ..strokeWidth = 1,
     );
     final path = Path();
+    final pointPaint = Paint()..color = line;
     var connected = false;
     for (final point in result.points) {
       if (point.semitones == null) {
@@ -125,6 +126,9 @@ class PitchContourPainter extends CustomPainter {
       final x = bounds.left + bounds.width * point.timeMs / result.durationMs;
       final y =
           bounds.center.dy - bounds.height * point.semitones! / (2 * span);
+      // Sparse previews can contain a single voiced bucket between gaps.
+      // A moveTo-only path is invisible, so also mark each measured point.
+      canvas.drawCircle(Offset(x, y), 2, pointPaint);
       if (connected) {
         path.lineTo(x, y);
       } else {

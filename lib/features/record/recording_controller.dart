@@ -292,7 +292,8 @@ class RecordingController extends Notifier<RecordingState> {
     PitchResult result;
     try {
       result = await completion.future;
-    } catch (_) {
+    } catch (error, stack) {
+      debugPrint('Pitch analysis failed: $error\n$stack');
       if (!_disposed) {
         state = RecordingState(
           mode: mode,

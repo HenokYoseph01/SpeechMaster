@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speech_coach/audio/analysis_isolate.dart';
+import 'package:speech_coach/audio/audio_config.dart';
 import 'package:speech_coach/audio/dsp/pitch_analysis.dart';
 import 'package:speech_coach/audio/dsp/vad.dart';
 import 'package:speech_coach/audio/dsp/wav.dart';
@@ -13,6 +14,62 @@ import '../support/audio_fixtures.dart';
 
 void main() {
   final config = loadAudioConfig();
+
+  test(
+    'preview retains sparse reliable speech segments without filling gaps',
+    () {
+      const rate = 16000;
+      final rng = math.Random(902);
+      final samples = Float32List(rate * 12);
+      for (var i = rate; i < rate * 11; i++) {
+        samples[i] = i % rate < 2240
+            ? 0.205 * math.sin(2 * math.pi * 150 * i / rate)
+            : 0.5 * (rng.nextDouble() - 0.5);
+      }
+      final audio = WavAudio(samples, rate);
+      final result = analyzePitch(audio, config);
+      expect(result.hasPitch, isTrue);
+      expect(result.usedPitchFallback, isFalse);
+      expect(
+        result.voicedRatio,
+        greaterThanOrEqualTo(config.chartMinimumVoicedRatio),
+      );
+      expect(result.voicedRatio, lessThan(config.minimumVoicedRatio));
+      expect(result.medianHz, closeTo(150, 3));
+      expect(
+        result.points.where((p) => p.semitones == null).length,
+        greaterThan(50),
+      );
+      final strict = AudioConfig.fromJson({
+        ...config.values,
+        'chartMinimumVoicedRatio': config.minimumVoicedRatio,
+      });
+      expect(analyzePitch(audio, strict).hasPitch, isFalse);
+    },
+  );
+
+  test(
+    'moderately noisy periodic frames pass the calibrated YIN threshold',
+    () {
+      const rate = 16000;
+      final rng = math.Random(503);
+      final samples = Float32List(rate * 4);
+      for (var i = 0; i < samples.length; i++) {
+        samples[i] =
+            0.2 * math.sin(2 * math.pi * 150 * i / rate) +
+            0.4 * (rng.nextDouble() - 0.5);
+      }
+      final audio = WavAudio(samples, rate);
+      final strict = AudioConfig.fromJson({
+        ...config.values,
+        'yinThreshold': 0.15,
+      });
+      expect(analyzePitch(audio, strict).hasPitch, isFalse);
+      final result = analyzePitch(audio, config);
+      expect(result.hasPitch, isTrue);
+      expect(result.medianHz, closeTo(150, 3));
+    },
+  );
 
   test('continuous voiced delivery retains pitch at different microphone levels', () {
     for (final amplitude in [0.1, 0.3, 0.7]) {

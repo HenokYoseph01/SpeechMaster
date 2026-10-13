@@ -35,6 +35,16 @@ Aggregate valid contour frames within each chart bucket to preserve pitch when
 the first frame of that bucket is unvoiced. Entirely unvoiced buckets stay gaps.
 Analysis version 2 identifies this DSP correction; existing audio remains local.
 
+## Real-recording correction (2026-10-13)
+
+The user explicitly authorized going outside AGENTS.md for this persistent
+failure. On-device diagnosis reproduced no contour in all seven saved WAVs
+despite valid capture. Version 3 uses a 0.25 YIN threshold and a separate 10%
+speech-gated preview threshold; whole-clip fallback retains its 30% requirement.
+Unvoiced gaps remain gaps, and isolated chart points are drawn visibly. These
+preview settings do not implement or relax scoring quality gates. A dedicated
+diagnostic entry point analyzes saved audio entirely on the phone.
+
 ## Remaining Phase 1 tasks
 
 - [ ] Pauses, syllable rate, windowed pace, remaining metrics and full quality gates.

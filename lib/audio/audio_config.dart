@@ -33,6 +33,7 @@ class AudioConfig {
         pitchMinimumHz >= pitchMaximumHz ||
         yinThreshold >= 1 ||
         minimumVoicedRatio > 1 ||
+        chartMinimumVoicedRatio > minimumVoicedRatio ||
         noiseFloorPercentile > 100 ||
         energyHopMs > energyFrameMs ||
         pitchHopMs > pitchFrameMs ||
@@ -88,6 +89,7 @@ class AudioConfig {
   int get pitchMedianFrames => _int('pitchMedianFrames');
   int get pitchAverageFrames => _int('pitchAverageFrames');
   double get minimumVoicedRatio => _double('minimumVoicedRatio');
+  double get chartMinimumVoicedRatio => _double('chartMinimumVoicedRatio');
   int get contourPointsPerSecond => _int('contourPointsPerSecond');
   int get lowPassTaps => _int('lowPassTaps');
   double get lowPassCutoffHz => _double('lowPassCutoffHz');

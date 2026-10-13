@@ -39,7 +39,12 @@ PitchResult analyzePitch(
       onProgress?.call(0.4 + 0.3 * offset / math.max(1, samples.length));
     }
   }
-  var selected = _prepareContour(hz, speechPitchFrames, config);
+  var selected = _prepareContour(
+    hz,
+    speechPitchFrames,
+    config,
+    minimumRatio: config.chartMinimumVoicedRatio,
+  );
   var usedPitchFallback = false;
   onProgress?.call(0.75);
   if (!selected.usable && hz.isNotEmpty) {
@@ -58,7 +63,12 @@ PitchResult analyzePitch(
         onProgress?.call(0.75 + 0.2 * i / candidates.length);
       }
     }
-    final fallback = _prepareContour(candidates, candidates.length, config);
+    final fallback = _prepareContour(
+      candidates,
+      candidates.length,
+      config,
+      minimumRatio: config.minimumVoicedRatio,
+    );
     if (fallback.usable) {
       selected = fallback;
       usedPitchFallback = true;
@@ -107,7 +117,12 @@ PitchResult analyzePitch(
 }
 
 ({double? medianHz, List<double?> contour, double ratio, bool usable})
-_prepareContour(List<double?> hz, int candidateFrames, AudioConfig config) {
+_prepareContour(
+  List<double?> hz,
+  int candidateFrames,
+  AudioConfig config, {
+  required double minimumRatio,
+}) {
   final voiced = hz.whereType<double>().toList();
   final median = voiced.isEmpty ? null : percentile(voiced, 50);
   final contour = <double?>[];
@@ -130,7 +145,9 @@ _prepareContour(List<double?> hz, int candidateFrames, AudioConfig config) {
   }
   final cleanVoiced = contour.whereType<double>().length;
   final ratio = candidateFrames == 0 ? 0.0 : cleanVoiced / candidateFrames;
-  final usable = median != null && ratio >= config.minimumVoicedRatio;
+  // A preview can show reliable segments even when many consonants or noisy
+  // frames are unvoiced. Whole-clip fallback keeps the stricter quality gate.
+  final usable = median != null && ratio >= minimumRatio;
   return (medianHz: median, contour: contour, ratio: ratio, usable: usable);
 }
 
