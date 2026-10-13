@@ -53,6 +53,7 @@ void main() {
       expect(recording.durationMs, 30040);
       expect(recording.language, 'am');
       expect(recording.overallScore, isNull);
+      expect(recording.analysisVersion, loadAudioConfig().analysisVersion);
       expect(recording.audioPath, draft.path);
       expect(await File(recording.audioPath).exists(), isTrue);
       final analysis = await database
@@ -70,4 +71,48 @@ void main() {
       await database.close();
     }
   });
+
+  test(
+    'fallback provenance is saved without inventing speech time or scores',
+    () async {
+      final database = AppDatabase(NativeDatabase.memory());
+      addTearDown(database.close);
+      final repository = RecordingRepository(database);
+      const draft = ClipDraft(
+        id: 'fallback',
+        path: '/local/fallback.wav',
+        createdAt: 1,
+        mode: RecordingMode.thirtySeconds,
+        language: 'en',
+      );
+      await repository.saveCapture(draft, 30000, loadAudioConfig());
+      await repository.savePitch(
+        draft,
+        const PitchResult(
+          durationMs: 30000,
+          points: [PitchPoint(0, 0, -20), PitchPoint(100, 0, -20)],
+          medianHz: 150,
+          voicedRatio: 1,
+          speechMs: 0,
+          analysisMs: 1,
+          noiseFloorDb: -20,
+          usedPitchFallback: true,
+        ),
+      );
+      final recording = await database.select(database.recordings).getSingle();
+      final result = await database
+          .select(database.analysisResults)
+          .getSingle();
+      expect(recording.overallScore, isNull);
+      expect(result.speechMs, 0);
+      expect(result.scorePitch, isNull);
+      expect(result.scorePace, isNull);
+      expect(result.scorePause, isNull);
+      expect(result.scoreVolume, isNull);
+      expect(jsonDecode(result.flagsJson!), [
+        'prototype_pitch_only',
+        'pitch_periodicity_fallback',
+      ]);
+    },
+  );
 }

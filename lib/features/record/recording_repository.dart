@@ -77,6 +77,7 @@ class RecordingRepository {
                 flagsJson: Value(
                   jsonEncode([
                     'prototype_pitch_only',
+                    if (result.usedPitchFallback) 'pitch_periodicity_fallback',
                     if (!result.hasPitch) 'insufficient_pitch',
                   ]),
                 ),

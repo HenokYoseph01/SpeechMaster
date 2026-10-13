@@ -33,9 +33,14 @@ before accepting the prototype.
 - A low-pass FIR filter precedes downsampling to 8 kHz for pitch.
 - Frame energy and VAD gate YIN; the detector searches 70–400 Hz and refines the
   first CMND valley below the configured threshold with parabolic interpolation.
+- The user approved a pitch-chart fallback when energy gating produces no usable
+  contour: YIN checks the remaining frames, with the existing minimum voiced
+  ratio applied to the whole clip. This recovers steady voiced delivery when the
+  noise-floor estimate contains speech. Silence and white noise remain unvoiced.
 - Semitones use the clip's median pitch. Octave jumps are rejected, with median
   and moving-average smoothing that preserve unvoiced gaps.
-- The chart stores 10 points per second. Too little voiced speech produces a
+- The chart stores 10 points per second using the median of voiced frames in each
+  time bucket, preserving fully unvoiced gaps. Too little voiced speech produces a
   localized suggestion to try again, rather than an invented contour.
 - The WAV and metadata are saved in the existing local tables and files folder.
   Analysis errors preserve the captured WAV for a retry.
@@ -47,7 +52,10 @@ behavior changed in this task.
 ## Scope and verification
 
 Pitch-only rows carry `prototype_pitch_only` in `flags_json`, and all scores
-remain null. Audio remains available for re-analysis as Phase 1 is completed;
+remain null. Chart fallback rows also carry `pitch_periodicity_fallback` and
+retain the original VAD speech-time estimate. This is analysis version 2; the
+approved exception is documented in the phase assignment. Audio remains available
+for re-analysis as Phase 1 is completed;
 increment `analysisVersion` when the pipeline changes. No pause/pace/volume
 metrics, full quality gates, playback, results scoring, or coaching tips are
 implemented by this task.

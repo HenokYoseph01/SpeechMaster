@@ -311,7 +311,11 @@ class RecordingController extends Notifier<RecordingState> {
     try {
       await ref.read(recordingRepositoryProvider).savePitch(_draft!, result);
       if (!_disposed) {
-        debugPrint('Pitch prototype analysis: ${result.analysisMs} ms');
+        debugPrint(
+          'Pitch prototype analysis: ${result.analysisMs} ms; '
+          'speech=${result.speechMs} ms; voicedRatio=${result.voicedRatio.toStringAsFixed(3)}; '
+          'fallback=${result.usedPitchFallback}; hasPitch=${result.hasPitch}',
+        );
         state = RecordingState(
           mode: mode,
           phase: RecordingPhase.done,

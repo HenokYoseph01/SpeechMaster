@@ -1,5 +1,5 @@
 {
-  "analysisVersion": 1,
+  "analysisVersion": 2,
   "captureSampleRate": 16000,
   "pitchSampleRate": 8000,
   "minimumRecordingMs": 10000,
