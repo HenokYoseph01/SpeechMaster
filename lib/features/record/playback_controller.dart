@@ -170,6 +170,19 @@ class PlaybackController {
     if (resume) _play();
   });
 
+  Future<void> playFrom(int absoluteMs, int durationMs) => _operate(() async {
+    _playAllowed = true;
+    await _device!.pause();
+    _startMs = 0;
+    await _device!.load(path, 0, null);
+    _loaded = true;
+    if (_disposed) return;
+    final start = absoluteMs.clamp(0, math.max(0, durationMs - 1)).toInt();
+    await _device!.seek(start);
+    _update(positionMs: start);
+    _play();
+  });
+
   Future<void> previewPause(
     int startMs,
     int endMs,

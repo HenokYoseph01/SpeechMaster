@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "chunkMs": 20000,
+  "overlapMs": 1000,
+  "threads": 2,
+  "replayLeadMs": 350,
+  "minimumSignalRms": 0.00001
+}

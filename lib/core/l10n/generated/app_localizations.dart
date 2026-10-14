@@ -595,6 +595,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{start}–{end} s'**
   String pauseMarker(String start, String end);
+
+  /// No description provided for @transcriptTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your words, with pause markers'**
+  String get transcriptTitle;
+
+  /// No description provided for @transcriptExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional English transcription runs on this phone. Tap a word or a marked gap to listen back.'**
+  String get transcriptExplanation;
+
+  /// No description provided for @transcribeRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Transcribe recording'**
+  String get transcribeRecording;
+
+  /// No description provided for @transcribeAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Transcribe again'**
+  String get transcribeAgain;
+
+  /// No description provided for @transcribingRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding the words in your recording…'**
+  String get transcribingRecording;
+
+  /// No description provided for @transcriptionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The transcript couldn\'t finish. Your recording is safe. Try again.'**
+  String get transcriptionFailed;
+
+  /// No description provided for @transcriptSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The transcript is shown below, but couldn\'t be saved. Try saving again.'**
+  String get transcriptSaveFailed;
+
+  /// No description provided for @transcriptEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No words were recognized. You can still replay the recording.'**
+  String get transcriptEmpty;
+
+  /// No description provided for @transcriptTimingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Words and their times are approximate. The … markers come from detected acoustic gaps, not transcript punctuation. Listen back to check them.'**
+  String get transcriptTimingNote;
+
+  /// No description provided for @transcriptWordTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen from about {seconds} s'**
+  String transcriptWordTime(String seconds);
+
+  /// No description provided for @transcriptPause.
+  ///
+  /// In en, this message translates to:
+  /// **'… {seconds} s …'**
+  String transcriptPause(String seconds);
 }
 
 class _AppLocalizationsDelegate

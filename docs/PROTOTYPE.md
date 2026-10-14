@@ -19,6 +19,9 @@ flutter run
    for unvoiced moments. Below it, check detected speech time, pause counts,
    estimated pace, volume variation and ending energy. No score is shown yet.
    Tap a detected pause below the summary to replay it with surrounding words.
+   Tap Transcribe recording for an optional offline English transcript. Tap a
+   word to replay from its approximate time; acoustic gaps appear as
+   `… duration …` chips, independent of transcript punctuation.
 5. Try finishing early: the finish button is unavailable before 10 seconds.
 6. Try the 60-second mode and verify its countdown stops automatically.
 7. Deny microphone permission and verify the explanation and Android app

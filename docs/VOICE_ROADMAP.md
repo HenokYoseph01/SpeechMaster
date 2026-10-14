@@ -26,11 +26,36 @@ boundaries through replay before interpreting them as delivery feedback.
 
 ## Next: English transcription and pitch calibration
 
-1. Evaluate an offline English recognizer that returns timestamps for the saved
-   WAV. Use the same audio source as analysis and playback. Do not open a second
-   microphone or silently use network speech recognition.
-2. Align recognized words and measured gaps; show ellipses with durations and
-   tappable timestamps. ASR omissions and punctuation are not silence evidence.
+Optional English transcription is now implemented after a recording completes:
+tap Transcribe recording to run the bundled quantized Zipformer-small model.
+This step does not delay or replace pitch/pause analysis. Recognized words carry
+actual token-emission timestamps, grouped into words and labelled approximate.
+Overlapping 20-second chunks bound working memory, with unique ownership of
+timestamps in overlap regions. Leaving the screen cancels between chunks and
+allows an in-flight native decode to clean up safely.
+
+The transcript view offers selectable text and replayable word chips with the
+acoustic `… duration …` pause markers interleaved by time. Playback highlights
+the current word or measured pause. No pause is inferred from punctuation or an
+ASR omission. Transcription is a hypothesis to check against replay; it does not
+change existing pace, pitch or quality metrics.
+
+Transcripts are cached in `<recording.wav>.transcript.json` beside private audio,
+with source size/mtime and model version validation, atomic writes and save retry.
+No database schema changes are needed. Future export/delete operations must
+include these sidecars. The reference test fixture is public LibriSpeech audio,
+with attribution in `test/fixtures/README.md`; it is not bundled in the app.
+
+Deployment note: the previous split ARM64 release used Android version code
+2001 while a default debug APK used 1, blocking data-preserving debug updates.
+Version 0.2.0 now uses code 2002 and `force-version-code-ignoring-abi=true`, so
+split and debug builds share a consistent app version code. Future releases
+should increment the pubspec build number normally; do not uninstall to update.
+
+1. Validate the bundled English recognizer and approximate timestamps across
+   accents, noise and normal delivery using the same saved WAV as replay.
+2. Check the word/pause alignment on real continuous-speech and deliberate-pause
+   takes. ASR omissions and punctuation are not silence evidence.
 3. Compare pitch candidates/confidence against labelled English samples and
    real-phone recordings; assess octave errors, low-register voices, quiet
    phrases, and unvoiced consonants before changing pitch thresholds again.
@@ -49,6 +74,8 @@ boundaries through replay before interpreting them as delivery feedback.
   errors; mask tests cover continuous speech without independent noise samples.
 - Replay tests cover context bounds, seek/resume, failures, and background or
   disposal during loading. Synthetic DSP acceptance tests remain in place.
+- `flutter run -t tool/phone_transcript_diagnostics.dart`: transcribe one latest
+  saved WAV and verify local cache reopening. Logs counts/timing only, not text.
 
 Research sources:
 
@@ -57,8 +84,9 @@ Research sources:
 - https://pub.dev/packages/sherpa_onnx/versions/1.13.8 (Flutter bindings)
 - https://pub.dev/packages/just_audio/versions/0.10.6 (local replay)
 - https://developer.android.com/reference/android/speech/SpeechRecognizer
-  (platform ASR availability is device-dependent; no transcription implemented
-  by this delivery)
+  (platform ASR is device-dependent and is not used by the bundled recognizer)
+- https://huggingface.co/csukuangfj/sherpa-onnx-zipformer-small-en-2023-06-26
+  (pinned offline English model, Apache 2.0)
 
 Real-phone accuracy and performance require checking the actual marked audio.
 Passing synthetic tests or changing the number of predicted pauses is not proof

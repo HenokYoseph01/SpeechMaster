@@ -68,6 +68,16 @@ void main() {
     expect(controller.state.playing, isFalse);
     expect(device.plays, 1);
   });
+  test(
+    'tapping a transcript word starts playback from its bounded position',
+    () async {
+      await controller.playFrom(-50, 30000);
+      expect(device.seeks.last, 0);
+      expect(controller.state.playing, isTrue);
+      await controller.playFrom(40000, 30000);
+      expect(device.seeks.last, 29999);
+    },
+  );
   test('pause preview is bounded and positions stay on the full recording timeline', () async {
     await controller.previewPause(500, 1500, 30000, 750);
     expect(device.loads.last, ('/private/clip.wav', 0, 2250));

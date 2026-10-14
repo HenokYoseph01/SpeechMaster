@@ -312,4 +312,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String pauseMarker(String start, String end) {
     return '$start–$end s';
   }
+
+  @override
+  String get transcriptTitle => 'Your words, with pause markers';
+
+  @override
+  String get transcriptExplanation =>
+      'Optional English transcription runs on this phone. Tap a word or a marked gap to listen back.';
+
+  @override
+  String get transcribeRecording => 'Transcribe recording';
+
+  @override
+  String get transcribeAgain => 'Transcribe again';
+
+  @override
+  String get transcribingRecording => 'Finding the words in your recording…';
+
+  @override
+  String get transcriptionFailed =>
+      'The transcript couldn\'t finish. Your recording is safe. Try again.';
+
+  @override
+  String get transcriptSaveFailed =>
+      'The transcript is shown below, but couldn\'t be saved. Try saving again.';
+
+  @override
+  String get transcriptEmpty =>
+      'No words were recognized. You can still replay the recording.';
+
+  @override
+  String get transcriptTimingNote =>
+      'Words and their times are approximate. The … markers come from detected acoustic gaps, not transcript punctuation. Listen back to check them.';
+
+  @override
+  String transcriptWordTime(String seconds) {
+    return 'Listen from about $seconds s';
+  }
+
+  @override
+  String transcriptPause(String seconds) {
+    return '… $seconds s …';
+  }
 }

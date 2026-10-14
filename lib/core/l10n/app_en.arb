@@ -99,5 +99,18 @@
   "pauseMarkersTitle": "Detected pause moments",
   "noDetectedPauses": "No internal pauses detected.",
   "pauseMarker": "{start}–{end} s",
-  "@pauseMarker": {"placeholders": {"start": {"type": "String"}, "end": {"type": "String"}}}
+  "@pauseMarker": {"placeholders": {"start": {"type": "String"}, "end": {"type": "String"}}},
+  "transcriptTitle": "Your words, with pause markers",
+  "transcriptExplanation": "Optional English transcription runs on this phone. Tap a word or a marked gap to listen back.",
+  "transcribeRecording": "Transcribe recording",
+  "transcribeAgain": "Transcribe again",
+  "transcribingRecording": "Finding the words in your recording…",
+  "transcriptionFailed": "The transcript couldn't finish. Your recording is safe. Try again.",
+  "transcriptSaveFailed": "The transcript is shown below, but couldn't be saved. Try saving again.",
+  "transcriptEmpty": "No words were recognized. You can still replay the recording.",
+  "transcriptTimingNote": "Words and their times are approximate. The … markers come from detected acoustic gaps, not transcript punctuation. Listen back to check them.",
+  "transcriptWordTime": "Listen from about {seconds} s",
+  "@transcriptWordTime": {"placeholders": {"seconds": {"type": "String"}}},
+  "transcriptPause": "… {seconds} s …",
+  "@transcriptPause": {"placeholders": {"seconds": {"type": "String"}}}
 }

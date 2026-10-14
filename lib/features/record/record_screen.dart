@@ -10,6 +10,7 @@ import 'recording_controller.dart';
 import 'recording_model.dart';
 import 'recording_replay.dart';
 import 'playback_controller.dart';
+import 'transcript_panel.dart';
 
 class RecordScreen extends ConsumerStatefulWidget {
   const RecordScreen({super.key});
@@ -253,6 +254,11 @@ class _RecordScreenState extends ConsumerState<RecordScreen>
                               path: state.audioPath!,
                               result: state.result!,
                               contextMs: config.value!.playbackContextMs,
+                            ),
+                            const SizedBox(height: 24),
+                            TranscriptPanel(
+                              path: state.audioPath!,
+                              recording: state.result!,
                             ),
                             const SizedBox(height: 24),
                           ],

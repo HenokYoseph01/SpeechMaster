@@ -1,7 +1,7 @@
 name: speech_coach
 description: "Local-first speech and presentation practice."
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.2.0+2002
 
 environment:
   sdk: ^3.13.5
@@ -35,6 +35,8 @@ flutter:
     - assets/audio_config.json
     - assets/models/silero_vad.onnx
     - assets/models/SILERO_LICENSE
+    - assets/models/english_zipformer/
+    - assets/transcription_config.json
   fonts:
     - family: Nunito
       fonts:
