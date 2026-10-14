@@ -21,6 +21,47 @@ void main() {
       }
     });
   }
+  test(
+    'dominant second harmonic retains the known fundamental across levels',
+    () {
+      for (final hz in [70.0, 80.0, 100.0, 150.0, 190.0]) {
+        for (final amplitude in [0.01, 0.3]) {
+          for (final phase in [0.0, 0.7, 2.1]) {
+            final frame = Float32List.fromList([
+              for (var i = 0; i < config.pitchFrameSamples; i++)
+                amplitude *
+                    (0.1 *
+                            math.sin(
+                              2 * math.pi * hz * i / config.pitchSampleRate +
+                                  phase,
+                            ) +
+                        math.sin(
+                          4 * math.pi * hz * i / config.pitchSampleRate + phase,
+                        ) +
+                        0.15 *
+                            math.sin(
+                              6 * math.pi * hz * i / config.pitchSampleRate +
+                                  phase,
+                            )),
+            ]);
+            final estimate = detector.detectEstimate(frame);
+            expect(estimate, isNotNull);
+            expect(semitones(estimate!.hz, hz).abs(), lessThan(0.1));
+            expect(estimate.octaveCorrected, isTrue);
+            expect(estimate.periodicity, inInclusiveRange(0.0, 1.0));
+          }
+        }
+      }
+    },
+  );
+  test('clean upper register is not halved by another periodic minimum', () {
+    for (final hz in [150.0, 190.0, 220.0, 350.0, 400.0]) {
+      final estimate = detector.detectEstimate(sine(hz));
+      expect(estimate, isNotNull);
+      expect(semitones(estimate!.hz, hz).abs(), lessThan(1));
+      expect(estimate.octaveCorrected, isFalse);
+    }
+  });
   test('silence and seeded white noise are unvoiced', () {
     expect(detector.detect(Float32List(config.pitchFrameSamples)), isNull);
     final rng = math.Random(23);

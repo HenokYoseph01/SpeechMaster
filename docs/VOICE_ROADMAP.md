@@ -42,8 +42,10 @@ change existing acoustic pace, pitch or quality metrics. After transcription, a
 separate recognized-word pace summary shows word count, whole-recording WPM,
 and configurable 10-second windows. Partial windows use their actual duration.
 Rates include silence; empty recognition leaves the average unavailable. ASR
-omissions remain uncertainty, never inferred silence. Pitch thresholds remain
-unchanged pending labelled recording calibration.
+omissions remain uncertainty, never inferred silence. Pitch calibration now checks for a substantially deeper difference minimum
+at twice the selected period before accepting a dominant second harmonic.
+The main voicing threshold and pitch range remain unchanged. Analysis version
+6 distinguishes new results; old recordings are not rewritten.
 
 Transcripts are cached in `<recording.wav>.transcript.json` beside private audio,
 with source size/mtime and model version validation, atomic writes and save retry.

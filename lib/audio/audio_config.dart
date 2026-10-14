@@ -36,6 +36,8 @@ class AudioConfig {
         lowPassCutoffHz >= pitchSampleRate / 2 ||
         pitchMinimumHz >= pitchMaximumHz ||
         yinThreshold >= 1 ||
+        yinOctaveImprovementRatio >= 1 ||
+        yinOctaveMinimumImprovement >= 1 ||
         minimumVoicedRatio > 1 ||
         chartMinimumVoicedRatio > minimumVoicedRatio ||
         noiseFloorPercentile > 100 ||
@@ -107,6 +109,8 @@ class AudioConfig {
     'pitchMinimumHz',
     'pitchMaximumHz',
     'yinThreshold',
+    'yinOctaveImprovementRatio',
+    'yinOctaveMinimumImprovement',
     'octaveJumpSemitones',
     'minimumVoicedRatio',
     'chartMinimumVoicedRatio',
@@ -149,6 +153,9 @@ class AudioConfig {
   double get pitchMinimumHz => _double('pitchMinimumHz');
   double get pitchMaximumHz => _double('pitchMaximumHz');
   double get yinThreshold => _double('yinThreshold');
+  double get yinOctaveImprovementRatio => _double('yinOctaveImprovementRatio');
+  double get yinOctaveMinimumImprovement =>
+      _double('yinOctaveMinimumImprovement');
   double get octaveJumpSemitones => _double('octaveJumpSemitones');
   int get pitchMedianFrames => _int('pitchMedianFrames');
   int get pitchAverageFrames => _int('pitchAverageFrames');

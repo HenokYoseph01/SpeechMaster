@@ -1,5 +1,5 @@
 {
-  "analysisVersion": 5,
+  "analysisVersion": 6,
   "captureSampleRate": 16000,
   "pitchSampleRate": 8000,
   "minimumRecordingMs": 10000,
@@ -8,7 +8,7 @@
   "energyFrameMs": 25,
   "energyHopMs": 10,
   "energyMedianFrames": 5,
-  "rmsEpsilon": 1e-9,
+  "rmsEpsilon": 1e-09,
   "noiseFloorPercentile": 10,
   "speechMarginDb": 10,
   "fillSpeechGapMs": 120,
@@ -56,5 +56,7 @@
   "syllableMinimumDb": -60,
   "playbackContextMs": 750,
   "waveformFloorDb": -60,
-  "waveformHistoryPoints": 60
+  "waveformHistoryPoints": 60,
+  "yinOctaveImprovementRatio": 0.2,
+  "yinOctaveMinimumImprovement": 0.02
 }

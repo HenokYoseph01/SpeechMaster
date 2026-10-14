@@ -152,6 +152,27 @@ void main() {
     expect(result.voicedRatio, greaterThan(0.9));
   });
 
+  test(
+    'dominant second harmonic stays at the fundamental after WAV filtering',
+    () {
+      const rate = 16000;
+      final samples = Float32List(rate * 12);
+      for (var i = rate; i < rate * 11; i++) {
+        final phase = 2 * math.pi * 150 * i / rate;
+        samples[i] =
+            0.025 * math.sin(phase) +
+            0.25 * math.sin(2 * phase) +
+            0.0375 * math.sin(3 * phase);
+      }
+      final result = analyzePitch(
+        decodeWav(makeWav(samples), expectedSampleRate: rate),
+        config,
+      );
+      expect(result.hasPitch, isTrue);
+      expect(result.medianHz, closeTo(150, 2));
+      expect(result.voicedRatio, greaterThan(0.9));
+    },
+  );
   test('changing white-noise levels never become a periodic pitch chart', () {
     const rate = 16000;
     final rng = math.Random(78);
