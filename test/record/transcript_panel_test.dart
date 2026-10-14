@@ -63,6 +63,7 @@ void main() {
               'threads': 2,
               'replayLeadMs': 350,
               'minimumSignalRms': 0.00001,
+              'paceWindowMs': 10000,
             }),
           ),
         ],
@@ -108,6 +109,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(calls, 1);
       expect(find.text('HELLO WORLD'), findsOneWidget);
+      expect(
+        find.text('2 recognized words · about 40 words/min'),
+        findsOneWidget,
+      );
+      expect(find.text('0.0–3.0 s: about 40 words/min'), findsOneWidget);
       expect(find.widgetWithText(ActionChip, 'HELLO'), findsOneWidget);
       expect(find.textContaining('…'), findsWidgets);
       await tester.tap(find.widgetWithText(ActionChip, 'HELLO'));

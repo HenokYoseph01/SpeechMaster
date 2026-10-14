@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../audio/offline_transcription.dart';
 import '../../audio/pitch_result.dart';
+import '../../audio/transcript_pace.dart';
 import '../../core/l10n/generated/app_localizations.dart';
 import '../../core/theme/app_theme.dart';
 import 'playback_controller.dart';
@@ -35,6 +36,9 @@ class TranscriptPanel extends ConsumerWidget {
     final config = ref.watch(transcriptionConfigProvider);
     final number = NumberFormat('0.0', 'en');
     final colors = Theme.of(context).extension<AppColors>()!;
+    final pace = state.result == null || !config.hasValue
+        ? null
+        : measureTranscriptPace(state.result!, config.value!.paceWindowMs);
     final active = !playback.playing || state.result == null
         ? null
         : transcriptMomentAt(
@@ -92,6 +96,29 @@ class TranscriptPanel extends ConsumerWidget {
         ],
         if (state.result != null) ...[
           const SizedBox(height: 16),
+          if (pace?.wordsPerMinute != null) ...[
+            Text(
+              strings.transcriptPaceTitle,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Text(
+              strings.transcriptPaceAverage(
+                pace!.wordCount.toString(),
+                NumberFormat('0', 'en').format(pace.wordsPerMinute),
+              ),
+            ),
+            Text(strings.transcriptPaceNote),
+            const SizedBox(height: 8),
+            for (final window in pace.windows)
+              Text(
+                strings.transcriptPaceWindow(
+                  number.format(window.startMs / 1000),
+                  number.format(window.endMs / 1000),
+                  NumberFormat('0', 'en').format(window.wordsPerMinute),
+                ),
+              ),
+            const SizedBox(height: 16),
+          ],
           if (state.result!.words.isEmpty)
             Text(strings.transcriptEmpty)
           else

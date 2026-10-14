@@ -661,6 +661,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'… {seconds} s …'**
   String transcriptPause(String seconds);
+
+  /// No description provided for @transcriptPaceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pace from recognized words'**
+  String get transcriptPaceTitle;
+
+  /// No description provided for @transcriptPaceAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} recognized words · about {rate} words/min'**
+  String transcriptPaceAverage(String count, String rate);
+
+  /// No description provided for @transcriptPaceNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses the whole recording, including silence. Missed or extra words affect this estimate. Compare with replay; word timing does not define pauses.'**
+  String get transcriptPaceNote;
+
+  /// No description provided for @transcriptPaceWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'{start}–{end} s: about {rate} words/min'**
+  String transcriptPaceWindow(String start, String end, String rate);
 }
 
 class _AppLocalizationsDelegate

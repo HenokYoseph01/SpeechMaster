@@ -112,5 +112,32 @@
   "transcriptWordTime": "Listen from about {seconds} s",
   "@transcriptWordTime": {"placeholders": {"seconds": {"type": "String"}}},
   "transcriptPause": "… {seconds} s …",
-  "@transcriptPause": {"placeholders": {"seconds": {"type": "String"}}}
+  "@transcriptPause": {"placeholders": {"seconds": {"type": "String"}}},
+  "transcriptPaceTitle": "Pace from recognized words",
+  "transcriptPaceAverage": "{count} recognized words · about {rate} words/min",
+  "@transcriptPaceAverage": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "transcriptPaceNote": "Uses the whole recording, including silence. Missed or extra words affect this estimate. Compare with replay; word timing does not define pauses.",
+  "transcriptPaceWindow": "{start}–{end} s: about {rate} words/min",
+  "@transcriptPaceWindow": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  }
 }

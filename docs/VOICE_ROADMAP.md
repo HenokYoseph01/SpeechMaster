@@ -38,7 +38,12 @@ The transcript view offers selectable text and replayable word chips with the
 acoustic `… duration …` pause markers interleaved by time. Playback highlights
 the current word or measured pause. No pause is inferred from punctuation or an
 ASR omission. Transcription is a hypothesis to check against replay; it does not
-change existing pace, pitch or quality metrics.
+change existing acoustic pace, pitch or quality metrics. After transcription, a
+separate recognized-word pace summary shows word count, whole-recording WPM,
+and configurable 10-second windows. Partial windows use their actual duration.
+Rates include silence; empty recognition leaves the average unavailable. ASR
+omissions remain uncertainty, never inferred silence. Pitch thresholds remain
+unchanged pending labelled recording calibration.
 
 Transcripts are cached in `<recording.wav>.transcript.json` beside private audio,
 with source size/mtime and model version validation, atomic writes and save retry.

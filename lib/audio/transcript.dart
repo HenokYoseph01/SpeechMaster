@@ -76,6 +76,11 @@ class TranscriptionConfig {
         throw FormatException('Invalid transcription setting: $key');
       }
     }
+    final paceWindow = json['paceWindowMs'];
+    if (paceWindow is! int || paceWindow <= 0 || paceWindow > 60000) {
+      throw const FormatException('Invalid pace window');
+    }
+    _paceWindowMs = paceWindow;
     version = json['version'] as int;
     chunkMs = json['chunkMs'] as int;
     overlapMs = json['overlapMs'] as int;
@@ -98,6 +103,8 @@ class TranscriptionConfig {
   }
   late final int version, chunkMs, overlapMs, threads, replayLeadMs;
   late final double minimumSignalRms;
+  int get paceWindowMs => _paceWindowMs;
+  late final int _paceWindowMs;
   Map<String, num> toJson() => {
     'version': version,
     'chunkMs': chunkMs,
@@ -105,6 +112,7 @@ class TranscriptionConfig {
     'threads': threads,
     'replayLeadMs': replayLeadMs,
     'minimumSignalRms': minimumSignalRms,
+    'paceWindowMs': paceWindowMs,
   };
 }
 

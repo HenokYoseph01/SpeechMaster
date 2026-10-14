@@ -346,4 +346,21 @@ class AppLocalizationsAm extends AppLocalizations {
   String transcriptPause(String seconds) {
     return '… $seconds s …';
   }
+
+  @override
+  String get transcriptPaceTitle => 'Pace from recognized words';
+
+  @override
+  String transcriptPaceAverage(String count, String rate) {
+    return '$count recognized words · about $rate words/min';
+  }
+
+  @override
+  String get transcriptPaceNote =>
+      'Uses the whole recording, including silence. Missed or extra words affect this estimate. Compare with replay; word timing does not define pauses.';
+
+  @override
+  String transcriptPaceWindow(String start, String end, String rate) {
+    return '$start–$end s: about $rate words/min';
+  }
 }

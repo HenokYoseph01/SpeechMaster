@@ -4,5 +4,6 @@
   "overlapMs": 1000,
   "threads": 2,
   "replayLeadMs": 350,
-  "minimumSignalRms": 0.00001
+  "minimumSignalRms": 1e-05,
+  "paceWindowMs": 10000
 }
