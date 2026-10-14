@@ -1,5 +1,5 @@
 {
-  "analysisVersion": 4,
+  "analysisVersion": 5,
   "captureSampleRate": 16000,
   "pitchSampleRate": 8000,
   "minimumRecordingMs": 10000,
@@ -47,6 +47,14 @@
   "loudnessHighPercentile": 95,
   "qualitySnrPercentile": 90,
   "englishSyllablesPerWord": 1.5,
+  "neuralVadThreshold": 0.5,
+  "neuralVadMinimumSilenceMs": 180,
+  "neuralVadMinimumSpeechMs": 100,
+  "neuralVadWindowSamples": 512,
+  "neuralVadMaxSpeechMs": 65000,
+  "neuralNoiseMinimumMs": 500,
+  "syllableMinimumDb": -60,
+  "playbackContextMs": 750,
   "waveformFloorDb": -60,
   "waveformHistoryPoints": 60
 }

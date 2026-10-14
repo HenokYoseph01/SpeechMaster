@@ -47,6 +47,7 @@ class RecordingState {
     this.progress = 0,
     this.levels = const [],
     this.result,
+    this.audioPath,
     this.failure,
     this.canRetryAnalysis = false,
   });
@@ -57,6 +58,7 @@ class RecordingState {
   final double progress;
   final List<double> levels;
   final PitchResult? result;
+  final String? audioPath;
   final RecordingFailure? failure;
   final bool canRetryAnalysis;
   bool get isBusy => switch (phase) {

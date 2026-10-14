@@ -65,7 +65,7 @@
   "qualityMoveCloser": "The recording is quiet. Try moving a little closer to the microphone.",
   "detectedSpeech": "Speech detected: {seconds} s",
   "@detectedSpeech": {"placeholders": {"seconds": {"type": "String"}}},
-  "deliveryPauses": "{count} pauses, lasting {seconds} s in total",
+  "deliveryPauses": "{count} detected pauses, lasting {seconds} s in total",
   "@deliveryPauses": {"placeholders": {"count": {"type": "int"}, "seconds": {"type": "String"}}},
   "deliveryPauseKinds": "{short} short, {medium} medium, {long} long",
   "@deliveryPauseKinds": {"placeholders": {"short": {"type": "int"}, "medium": {"type": "int"}, "long": {"type": "int"}}},
@@ -87,5 +87,17 @@
   "@deliveryPitchRange": {"placeholders": {"range": {"type": "String"}}},
   "deliveryPitchLimited": "Some pitch measurements aren't available. The chart can still show clear segments.",
   "deliveryPaceUnavailable": "There weren't enough voiced sounds to estimate pace.",
-  "deliveryPaceExplanation": "Pace is estimated from voiced sounds. Unclear sounds can be missed; this isn't a word count. Opening and closing silence aren't counted as pauses."
+  "deliveryPaceExplanation": "Pace and pauses are estimates. Replay a marked gap to check it. Opening and closing silence aren't counted as pauses.",
+  "deliveryNoiseUncertain": "There wasn't enough background-only audio to estimate room noise reliably.",
+  "replayTitle": "Listen back",
+  "replayExplanation": "Tap a detected pause to hear it with the words around it. Your audio stays on this phone.",
+  "playRecording": "Play recording",
+  "pausePlayback": "Pause playback",
+  "playbackFailed": "The recording couldn't play. Tap Play to try again.",
+  "replayPosition": "{position} / {duration} s",
+  "@replayPosition": {"placeholders": {"position": {"type": "String"}, "duration": {"type": "String"}}},
+  "pauseMarkersTitle": "Detected pause moments",
+  "noDetectedPauses": "No internal pauses detected.",
+  "pauseMarker": "{start}–{end} s",
+  "@pauseMarker": {"placeholders": {"start": {"type": "String"}, "end": {"type": "String"}}}
 }

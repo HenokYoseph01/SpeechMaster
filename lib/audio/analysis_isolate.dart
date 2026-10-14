@@ -5,14 +5,26 @@ import 'audio_config.dart';
 import 'dsp/pitch_analysis.dart';
 import 'dsp/wav.dart';
 import 'pitch_result.dart';
+import 'neural_vad.dart';
 
-Stream<PitchEvent> analyzeWavInIsolate(String path, AudioConfig config) async* {
+Stream<PitchEvent> analyzeWavInIsolate(
+  String path,
+  AudioConfig config, {
+  String? vadModelPath,
+  String? nativeLibraryDirectory,
+}) async* {
   final port = ReceivePort();
   Isolate? isolate;
   try {
     isolate = await Isolate.spawn(
       _analyzeWorker,
-      (path, config.values, port.sendPort),
+      (
+        path,
+        config.values,
+        port.sendPort,
+        vadModelPath,
+        nativeLibraryDirectory,
+      ),
       onError: port.sendPort,
       onExit: port.sendPort,
       errorsAreFatal: true,
@@ -36,12 +48,29 @@ Stream<PitchEvent> analyzeWavInIsolate(String path, AudioConfig config) async* {
 }
 
 Future<void> _analyzeWorker(
-  (String, Map<String, dynamic>, SendPort) request,
+  (String, Map<String, dynamic>, SendPort, String?, String?) request,
 ) async {
-  final (path, values, port) = request;
+  final (path, values, port, model, nativeLibraryDirectory) = request;
   port.send(0.0);
   final config = AudioConfig.fromJson(values);
   final bytes = await File(path).readAsBytes();
   final audio = decodeWav(bytes, expectedSampleRate: config.captureSampleRate);
-  port.send(analyzePitch(audio, config, onProgress: port.send));
+  final watch = Stopwatch()..start();
+  final speech = model == null
+      ? null
+      : detectNeuralSpeech(
+          audio.samples,
+          config,
+          model,
+          nativeLibraryDirectory: nativeLibraryDirectory,
+        );
+  port.send(
+    analyzePitch(
+      audio,
+      config,
+      onProgress: port.send,
+      speechFrames: speech,
+      analysisWatch: watch,
+    ),
+  );
 }

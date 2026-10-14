@@ -9,6 +9,27 @@ class SpeechFrames {
   final List<double> db;
   final List<bool> speech;
   final double? noiseFloorDb;
+  SpeechFrames withSegments(List<(int, int)> segments, AudioConfig config) {
+    final mask = List<bool>.filled(db.length, false);
+    for (final (start, end) in segments) {
+      for (
+        var i = math.max(0, start ~/ config.energyHopMs);
+        i < mask.length && i * config.energyHopMs < end;
+        i++
+      ) {
+        mask[i] = true;
+      }
+    }
+    final quiet = <double>[
+      for (var i = 0; i < db.length; i++)
+        if (!mask[i]) db[i],
+    ];
+    final floor =
+        quiet.length * config.energyHopMs >= config.neuralNoiseMinimumMs
+        ? percentile(quiet, config.noiseFloorPercentile)
+        : null;
+    return SpeechFrames(db, List.unmodifiable(mask), floor);
+  }
 }
 
 SpeechFrames detectSpeech(Float32List samples, AudioConfig config) {

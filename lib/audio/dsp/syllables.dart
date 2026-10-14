@@ -54,7 +54,7 @@ List<int> detectSyllablePeaks(
   List<double?> speechContour,
   AudioConfig config,
 ) {
-  if (energy.noiseFloorDb == null || !speechContour.any((v) => v != null)) {
+  if (!speechContour.any((v) => v != null)) {
     return const [];
   }
   final filtered = bandPassForSyllables(samples, config);
@@ -84,7 +84,9 @@ List<int> detectSyllablePeaks(
     );
     envelope.add(20 * math.log(rms + config.rmsEpsilon) / math.ln10);
   }
-  final threshold = energy.noiseFloorDb! + config.speechMarginDb;
+  final threshold = energy.noiseFloorDb == null
+      ? config.syllableMinimumDb
+      : energy.noiseFloorDb! + config.speechMarginDb;
   final candidates = <({int timeMs, double db})>[];
   for (var i = 1; i + 1 < envelope.length; i++) {
     if (envelope[i] <= threshold ||

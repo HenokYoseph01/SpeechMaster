@@ -1,5 +1,14 @@
 # AGENTS.md
 
+## Current user direction (2026-10-14)
+
+The user explicitly superseded the conflicting rules below: focus new work on
+English only, research and improve voice analysis freely, and do not treat the
+old phase/dependency restrictions as approval gates. `docs/VOICE_ROADMAP.md`
+records the active direction. Keep audio on-device. Preserve useful checks,
+tests and existing user data. The original spec remains historical reference;
+do not silently rewrite the human-owned document.
+
 Project: speech and presentation coaching app (working title). Flutter, Android first, local-first.
 It records a 30 s or 60 s clip, scores how expressive the delivery sounds on the phone, and gives varied tips.
 

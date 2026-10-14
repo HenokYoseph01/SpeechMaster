@@ -15,8 +15,10 @@ dependencies:
   flutter_riverpod: 3.4.3
   go_router: 18.0.2
   intl: 0.20.3
+  just_audio: 0.10.6
   path_provider: 2.1.6
   record: 7.1.2
+  sherpa_onnx: 1.13.8
   sqlite3: 3.7.0
 
 dev_dependencies:
@@ -31,6 +33,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/audio_config.json
+    - assets/models/silero_vad.onnx
+    - assets/models/SILERO_LICENSE
   fonts:
     - family: Nunito
       fonts:

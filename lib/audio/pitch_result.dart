@@ -19,6 +19,7 @@ class PitchResult {
     required this.noiseFloorDb,
     this.usedPitchFallback = false,
     this.analysis,
+    this.usedNeuralVad = false,
   });
   final int durationMs;
   final List<PitchPoint> points;
@@ -29,6 +30,7 @@ class PitchResult {
   final double? noiseFloorDb;
   final bool usedPitchFallback;
   final AnalysisResult? analysis;
+  final bool usedNeuralVad;
   bool get hasPitch =>
       medianHz != null && points.any((point) => point.semitones != null);
 }

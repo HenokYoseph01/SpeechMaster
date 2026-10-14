@@ -25,6 +25,9 @@ class AudioConfig {
         minimumRecordingMs != 10000 ||
         waveformFloorDb >= 0 ||
         qualityQuietFrameDb >= 0 ||
+        syllableMinimumDb >= 0 ||
+        neuralVadThreshold >= 1 ||
+        neuralVadWindowSamples != 512 ||
         lowPassTaps < 3 ||
         lowPassTaps.isEven ||
         energyMedianFrames.isEven ||
@@ -85,8 +88,18 @@ class AudioConfig {
     'paceWindowMs',
     'paceMinimumSpeechMs',
     'qualityMinimumSpeechMs',
+    'neuralVadMinimumSilenceMs',
+    'neuralVadMinimumSpeechMs',
+    'neuralVadWindowSamples',
+    'neuralVadMaxSpeechMs',
+    'neuralNoiseMinimumMs',
+    'playbackContextMs',
   ];
-  static const _negativeKeys = {'waveformFloorDb', 'qualityQuietFrameDb'};
+  static const _negativeKeys = {
+    'waveformFloorDb',
+    'qualityQuietFrameDb',
+    'syllableMinimumDb',
+  };
   static const _numberKeys = [
     'rmsEpsilon',
     'noiseFloorPercentile',
@@ -112,6 +125,8 @@ class AudioConfig {
     'loudnessHighPercentile',
     'qualitySnrPercentile',
     'englishSyllablesPerWord',
+    'neuralVadThreshold',
+    'syllableMinimumDb',
   ];
   int _int(String key) => (values[key] as num).toInt();
   double _double(String key) => (values[key] as num).toDouble();
@@ -165,6 +180,14 @@ class AudioConfig {
   double get loudnessHighPercentile => _double('loudnessHighPercentile');
   double get qualitySnrPercentile => _double('qualitySnrPercentile');
   double get englishSyllablesPerWord => _double('englishSyllablesPerWord');
+  double get neuralVadThreshold => _double('neuralVadThreshold');
+  int get neuralVadMinimumSilenceMs => _int('neuralVadMinimumSilenceMs');
+  int get neuralVadMinimumSpeechMs => _int('neuralVadMinimumSpeechMs');
+  int get neuralVadWindowSamples => _int('neuralVadWindowSamples');
+  int get neuralVadMaxSpeechMs => _int('neuralVadMaxSpeechMs');
+  int get neuralNoiseMinimumMs => _int('neuralNoiseMinimumMs');
+  double get syllableMinimumDb => _double('syllableMinimumDb');
+  int get playbackContextMs => _int('playbackContextMs');
   int get pitchFrameSamples => pitchSampleRate * pitchFrameMs ~/ 1000;
   int get pitchHopSamples => pitchSampleRate * pitchHopMs ~/ 1000;
 }

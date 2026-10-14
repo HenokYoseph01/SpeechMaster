@@ -8,6 +8,8 @@ import 'delivery_summary.dart';
 import 'pitch_chart.dart';
 import 'recording_controller.dart';
 import 'recording_model.dart';
+import 'recording_replay.dart';
+import 'playback_controller.dart';
 
 class RecordScreen extends ConsumerStatefulWidget {
   const RecordScreen({super.key});
@@ -245,12 +247,32 @@ class _RecordScreenState extends ConsumerState<RecordScreen>
                             DeliverySummary(analysis: state.result!.analysis!),
                             const SizedBox(height: 24),
                           ],
+                          if (state.audioPath != null) ...[
+                            RecordingReplay(
+                              key: ValueKey(state.audioPath),
+                              path: state.audioPath!,
+                              result: state.result!,
+                              contextMs: config.value!.playbackContextMs,
+                            ),
+                            const SizedBox(height: 24),
+                          ],
                           Text(strings.recordingSaved),
                           const SizedBox(height: 24),
                         ],
                         FilledButton.icon(
                           onPressed: config.hasValue
-                              ? () => controller.start(strings.localeName)
+                              ? () async {
+                                  if (state.audioPath != null) {
+                                    await ref
+                                        .read(
+                                          playbackControllerProvider(
+                                            state.audioPath!,
+                                          ),
+                                        )
+                                        .pause();
+                                  }
+                                  if (mounted) await controller.start('en');
+                                }
                               : null,
                           icon: const Icon(Icons.mic_rounded),
                           label: Text(

@@ -77,7 +77,7 @@ void main() {
             .select(database.recordings)
             .getSingle();
         expect(recording.overallScore, isNull);
-        expect(recording.analysisVersion, 4);
+        expect(recording.analysisVersion, 5);
         expect(await File(recording.audioPath).exists(), isTrue);
       } finally {
         await database.close();

@@ -19,6 +19,7 @@ class DeliverySummary extends StatelessWidget {
     final signed = NumberFormat('+0.0;-0.0', strings.localeName);
     final percent = NumberFormat.percentPattern(strings.localeName);
     final measurements = <String>[
+      if (analysis.snrDb == null) strings.deliveryNoiseUncertain,
       strings.detectedSpeech(decimal.format(analysis.speechMs / 1000)),
       strings.deliveryPauses(
         analysis.pauses.length,

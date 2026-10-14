@@ -461,7 +461,7 @@ abstract class AppLocalizations {
   /// No description provided for @deliveryPauses.
   ///
   /// In en, this message translates to:
-  /// **'{count} pauses, lasting {seconds} s in total'**
+  /// **'{count} detected pauses, lasting {seconds} s in total'**
   String deliveryPauses(int count, String seconds);
 
   /// No description provided for @deliveryPauseKinds.
@@ -533,8 +533,68 @@ abstract class AppLocalizations {
   /// No description provided for @deliveryPaceExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Pace is estimated from voiced sounds. Unclear sounds can be missed; this isn\'t a word count. Opening and closing silence aren\'t counted as pauses.'**
+  /// **'Pace and pauses are estimates. Replay a marked gap to check it. Opening and closing silence aren\'t counted as pauses.'**
   String get deliveryPaceExplanation;
+
+  /// No description provided for @deliveryNoiseUncertain.
+  ///
+  /// In en, this message translates to:
+  /// **'There wasn\'t enough background-only audio to estimate room noise reliably.'**
+  String get deliveryNoiseUncertain;
+
+  /// No description provided for @replayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Listen back'**
+  String get replayTitle;
+
+  /// No description provided for @replayExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a detected pause to hear it with the words around it. Your audio stays on this phone.'**
+  String get replayExplanation;
+
+  /// No description provided for @playRecording.
+  ///
+  /// In en, this message translates to:
+  /// **'Play recording'**
+  String get playRecording;
+
+  /// No description provided for @pausePlayback.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause playback'**
+  String get pausePlayback;
+
+  /// No description provided for @playbackFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The recording couldn\'t play. Tap Play to try again.'**
+  String get playbackFailed;
+
+  /// No description provided for @replayPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'{position} / {duration} s'**
+  String replayPosition(String position, String duration);
+
+  /// No description provided for @pauseMarkersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Detected pause moments'**
+  String get pauseMarkersTitle;
+
+  /// No description provided for @noDetectedPauses.
+  ///
+  /// In en, this message translates to:
+  /// **'No internal pauses detected.'**
+  String get noDetectedPauses;
+
+  /// No description provided for @pauseMarker.
+  ///
+  /// In en, this message translates to:
+  /// **'{start}–{end} s'**
+  String pauseMarker(String start, String end);
 }
 
 class _AppLocalizationsDelegate

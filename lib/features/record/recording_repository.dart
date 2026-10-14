@@ -104,6 +104,7 @@ class RecordingRepository {
                     ? 'prototype_pitch_only'
                     : 'phase1_metrics_only',
                 if (result.usedPitchFallback) 'pitch_periodicity_fallback',
+                if (result.usedNeuralVad) 'silero_vad',
                 if (metrics == null
                     ? !result.hasPitch
                     : metrics.pitchRangeSt == null)

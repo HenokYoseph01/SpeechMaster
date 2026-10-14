@@ -216,7 +216,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String deliveryPauses(int count, String seconds) {
-    return '$count pauses, lasting $seconds s in total';
+    return '$count detected pauses, lasting $seconds s in total';
   }
 
   @override
@@ -274,5 +274,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deliveryPaceExplanation =>
-      'Pace is estimated from voiced sounds. Unclear sounds can be missed; this isn\'t a word count. Opening and closing silence aren\'t counted as pauses.';
+      'Pace and pauses are estimates. Replay a marked gap to check it. Opening and closing silence aren\'t counted as pauses.';
+
+  @override
+  String get deliveryNoiseUncertain =>
+      'There wasn\'t enough background-only audio to estimate room noise reliably.';
+
+  @override
+  String get replayTitle => 'Listen back';
+
+  @override
+  String get replayExplanation =>
+      'Tap a detected pause to hear it with the words around it. Your audio stays on this phone.';
+
+  @override
+  String get playRecording => 'Play recording';
+
+  @override
+  String get pausePlayback => 'Pause playback';
+
+  @override
+  String get playbackFailed =>
+      'The recording couldn\'t play. Tap Play to try again.';
+
+  @override
+  String replayPosition(String position, String duration) {
+    return '$position / $duration s';
+  }
+
+  @override
+  String get pauseMarkersTitle => 'Detected pause moments';
+
+  @override
+  String get noDetectedPauses => 'No internal pauses detected.';
+
+  @override
+  String pauseMarker(String start, String end) {
+    return '$start–$end s';
+  }
 }

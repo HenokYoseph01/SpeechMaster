@@ -5,11 +5,12 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:speech_coach/audio/analysis_isolate.dart';
+import 'package:speech_coach/audio/recording_analysis.dart';
 import 'package:speech_coach/audio/audio_config.dart';
 import 'package:speech_coach/audio/dsp/wav.dart';
 import 'package:speech_coach/audio/pitch_result.dart';
 import 'package:speech_coach/main.dart' as app;
+import 'package:speech_coach/features/record/playback_controller.dart';
 
 // Run on the phone with flutter run -t tool/phone_pitch_diagnostics.dart.
 // Audio stays on the device. Only aggregate diagnostics go to the debug log.
@@ -41,7 +42,20 @@ Future<void> main() async {
         'PHONE_PITCH clip=$index duration=${audio.durationMs} '
         'peak=$peak rms=${math.sqrt(squareSum / audio.samples.length)}',
       );
-      final events = await analyzeWavInIsolate(file.path, config).toList();
+      final events = await analyzeRecording(file.path, config).toList();
+      if (index == 1 && const bool.fromEnvironment('CHECK_REPLAY')) {
+        final playback = LocalPlaybackDevice();
+        try {
+          await playback.load(file.path, 0, null);
+          await playback.seek(1000);
+          await playback.load(file.path, 0, 2000);
+          debugPrint(
+            'PHONE_REPLAY local WAV load, seek and bounded source passed',
+          );
+        } finally {
+          await playback.dispose();
+        }
+      }
       final result = events.whereType<PitchComplete>().single.result;
       debugPrint(
         'PHONE_PITCH clip=$index version=${config.analysisVersion} '

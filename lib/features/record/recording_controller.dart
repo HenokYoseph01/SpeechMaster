@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../audio/analysis_isolate.dart';
+import '../../audio/recording_analysis.dart';
 import '../../audio/audio_config.dart';
 import '../../audio/pitch_result.dart';
 import '../../audio/recorder.dart';
@@ -23,7 +23,7 @@ final recordingDeviceFactoryProvider = Provider<RecordingDevice Function()>(
 );
 final pitchAnalyzerProvider =
     Provider<Stream<PitchEvent> Function(String, AudioConfig)>(
-      (ref) => analyzeWavInIsolate,
+      (ref) => analyzeRecording,
     );
 final recordingClockFactoryProvider = Provider<RecordingClock Function()>(
   (ref) => StopwatchRecordingClock.new,
@@ -321,6 +321,7 @@ class RecordingController extends Notifier<RecordingState> {
           mode: mode,
           phase: RecordingPhase.done,
           result: result,
+          audioPath: _draft!.path,
           progress: 1,
         );
       }

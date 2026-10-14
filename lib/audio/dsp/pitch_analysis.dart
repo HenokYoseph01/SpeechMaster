@@ -13,9 +13,11 @@ PitchResult analyzePitch(
   WavAudio audio,
   AudioConfig config, {
   void Function(double)? onProgress,
+  SpeechFrames? speechFrames,
+  Stopwatch? analysisWatch,
 }) {
-  final watch = Stopwatch()..start();
-  final energy = detectSpeech(audio.samples, config);
+  final watch = analysisWatch ?? (Stopwatch()..start());
+  final energy = speechFrames ?? detectSpeech(audio.samples, config);
   onProgress?.call(0.2);
   final samples = downsampleForPitch(audio.samples, config);
   onProgress?.call(0.4);
@@ -125,6 +127,7 @@ PitchResult analyzePitch(
     noiseFloorDb: energy.noiseFloorDb,
     usedPitchFallback: usedPitchFallback,
     analysis: analysis,
+    usedNeuralVad: speechFrames != null,
   );
 }
 

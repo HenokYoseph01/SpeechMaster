@@ -1,8 +1,9 @@
 # Recording and delivery measurements
 
 Phase 0 and the recording/pitch prototype were accepted on a real Android phone.
-This Phase 1 build extends that prototype with delivery measurements and quality
-checks.
+The current build extends it with delivery measurements, neural speech detection,
+and local replay. The user authorized an English-first voice-analysis direction
+on 2026-10-14; see `docs/VOICE_ROADMAP.md` for the current scope.
 
 ## Try it on an Android phone
 
@@ -17,6 +18,7 @@ flutter run
 4. Verify that a pitch chart appears after recording, with rises/falls and gaps
    for unvoiced moments. Below it, check detected speech time, pause counts,
    estimated pace, volume variation and ending energy. No score is shown yet.
+   Tap a detected pause below the summary to replay it with surrounding words.
 5. Try finishing early: the finish button is unavailable before 10 seconds.
 6. Try the 60-second mode and verify its countdown stops automatically.
 7. Deny microphone permission and verify the explanation and Android app
@@ -87,10 +89,13 @@ preview still draws some segments. Audio remains available for later re-analysis
 old results are not automatically rewritten. Playback, scoring and coaching tips
 are later work.
 
-The existing adaptive VAD can underestimate continuous speech when there is
-little silence from which to estimate a noise floor. The chart-only fallback
-does not override speech time, pace or quality gates. Treat pace as approximate;
-real English/Amharic recordings still need calibration before coaching or scores.
+Production analysis now uses a bundled Silero speech detector instead of the
+volume-only VAD. All recordings stay on the phone, including replay. Version 5
+rows include `silero_vad` in flags. The legacy energy detector remains a
+reference for synthetic tone tests, and the chart-only fallback remains separate.
+When there is too little independently detected background-only audio, SNR is
+unavailable rather than estimated from speech. Treat pace and pause boundaries
+as estimates; replay the actual flagged audio before interpreting them.
 
 The automated suite checks tones across 70–400 Hz with less than one semitone
 error, a 120–240 Hz glide, silence/noise, low-pass attenuation, padded/truncated
