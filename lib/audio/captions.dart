@@ -55,12 +55,15 @@ List<CaptionCue> captionCues(
   return List.unmodifiable(cues);
 }
 
+bool isCaptionPause(List<PauseInterval> pauses, int positionMs) =>
+    pauses.any((p) => positionMs >= p.startMs && positionMs < p.endMs);
+
 CaptionCue? captionAt(
   List<CaptionCue> cues,
   List<PauseInterval> pauses,
   int positionMs,
 ) {
-  if (pauses.any((p) => positionMs >= p.startMs && positionMs < p.endMs)) {
+  if (isCaptionPause(pauses, positionMs)) {
     return null;
   }
   for (final cue in cues) {

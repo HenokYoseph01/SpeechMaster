@@ -746,6 +746,12 @@ abstract class AppLocalizations {
   /// **'Approximate words and timing. Your choice is saved for this recording.'**
   String get captionsTimingNote;
 
+  /// No description provided for @captionsPause.
+  ///
+  /// In en, this message translates to:
+  /// **'(Pause)'**
+  String get captionsPause;
+
   /// No description provided for @captionsNoWords.
   ///
   /// In en, this message translates to:

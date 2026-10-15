@@ -16,3 +16,5 @@
 - 2026-10-14: Pitch calibration — reproduced dominant-second-harmonic octave errors, added bounded twice-period correction and periodicity diagnostics, version 6 and regression/calibration coverage; real speech ground truth still pending.
 
 - 2026-10-15: Saved recordings and captions — added history/replay with per-clip cached transcripts, synchronized phrase captions and persisted on/off choices; local sidecars, no schema change; export/delete and full historical analysis presentation remain future work.
+
+- 2026-10-15: Caption pause label — show (Pause) during detected acoustic gaps; retain the unavailable-caption message for unrecognized moments.

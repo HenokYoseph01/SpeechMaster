@@ -65,7 +65,12 @@ class RecordingCaptions extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: cue == null
-                    ? Text(strings.captionsNoWords, textAlign: TextAlign.center)
+                    ? Text(
+                        isCaptionPause(pauses, playback.positionMs)
+                            ? strings.captionsPause
+                            : strings.captionsNoWords,
+                        textAlign: TextAlign.center,
+                      )
                     : Text.rich(
                         TextSpan(
                           children: [

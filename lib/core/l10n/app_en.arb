@@ -157,6 +157,7 @@
   "captionsTitle": "Closed captions",
   "captionsNeedTranscript": "Transcribe this recording below to enable captions.",
   "captionsTimingNote": "Approximate words and timing. Your choice is saved for this recording.",
+  "captionsPause": "(Pause)",
   "captionsNoWords": "No caption at this moment.",
   "captionsPreferenceFailed": "Your caption choice couldn't be saved. Try switching it again."
 }

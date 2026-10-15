@@ -410,6 +410,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Approximate words and timing. Your choice is saved for this recording.';
 
   @override
+  String get captionsPause => '(Pause)';
+
+  @override
   String get captionsNoWords => 'No caption at this moment.';
 
   @override

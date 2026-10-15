@@ -7,7 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speech_coach/audio/analysis_result.dart';
 import 'package:speech_coach/audio/captions.dart';
-import 'package:speech_coach/audio/pitch_result.dart';
+import 'package:speech_coach/audio/dsp/pitch_analysis.dart';
+import 'package:speech_coach/audio/dsp/wav.dart';
 import 'package:speech_coach/audio/transcript.dart';
 import 'package:speech_coach/core/l10n/generated/app_localizations.dart';
 import 'package:speech_coach/core/theme/app_theme.dart';
@@ -16,6 +17,8 @@ import 'package:speech_coach/features/record/playback_controller.dart';
 import 'package:speech_coach/features/record/recording_captions.dart';
 import 'package:speech_coach/features/record/transcript_panel.dart';
 import 'package:speech_coach/features/record/transcription_controller.dart';
+
+import '../support/audio_fixtures.dart';
 
 import 'transcription_controller_test.dart' show MemoryTranscriptRepository;
 
@@ -114,6 +117,14 @@ void main() {
   testWidgets(
     'cached transcript enables captions without transcribing and follows playback',
     (tester) async {
+      final samples = speechTone(durationSeconds: 6);
+      for (var i = 16000; i < 24000; i++) {
+        samples[i] = 0;
+      }
+      final recording = analyzePitch(
+        WavAudio(samples, 16000),
+        loadAudioConfig(),
+      );
       final preferences = MemoryPreferences();
       final repository = MemoryTranscriptRepository()..saved = transcript;
       var calls = 0;
@@ -141,28 +152,25 @@ void main() {
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             theme: buildTheme(AppTheme.honey, Brightness.light),
-            home: const Scaffold(
-              body: RecordingCaptions(
-                path: '/local.wav',
-                recording: PitchResult(
-                  durationMs: 6000,
-                  points: [],
-                  medianHz: null,
-                  voicedRatio: 0,
-                  speechMs: 0,
-                  analysisMs: 0,
-                  noiseFloorDb: null,
-                ),
-              ),
+            home: Scaffold(
+              body: RecordingCaptions(path: '/local.wav', recording: recording),
             ),
           ),
         ),
       );
       await tester.pumpAndSettle();
-      positions.add(const PlaybackState(positionMs: 1000, playing: true));
+      positions.add(const PlaybackState(positionMs: 800, playing: true));
       await tester.pumpAndSettle();
       expect(find.text('HELLO WORLD '), findsOneWidget);
       expect(calls, 0);
+      positions.add(const PlaybackState(positionMs: 1200, playing: true));
+      await tester.pumpAndSettle();
+      expect(find.text('(Pause)'), findsOneWidget);
+      expect(find.text('No caption at this moment.'), findsNothing);
+      positions.add(const PlaybackState(positionMs: 3500));
+      await tester.pumpAndSettle();
+      expect(find.text('(Pause)'), findsNothing);
+      expect(find.text('No caption at this moment.'), findsOneWidget);
       positions.add(const PlaybackState(positionMs: 4500));
       await tester.pumpAndSettle();
       expect(find.text('AGAIN '), findsOneWidget);
