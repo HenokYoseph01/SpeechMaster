@@ -685,6 +685,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{start}–{end} s: about {rate} words/min'**
   String transcriptPaceWindow(String start, String end, String rate);
+
+  /// No description provided for @recordingHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recordings'**
+  String get recordingHistory;
+
+  /// No description provided for @historyEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Your saved recordings will appear here after you record.'**
+  String get historyEmpty;
+
+  /// No description provided for @historyFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your recordings couldn\'t load. Please try again.'**
+  String get historyFailed;
+
+  /// No description provided for @savedRecordingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved recording'**
+  String get savedRecordingTitle;
+
+  /// No description provided for @savedRecordingMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'This recording is no longer available.'**
+  String get savedRecordingMissing;
+
+  /// No description provided for @savedAudioMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'The audio file is unavailable. Your saved recording details have been kept.'**
+  String get savedAudioMissing;
+
+  /// No description provided for @savedClipDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds} seconds'**
+  String savedClipDuration(int seconds);
+
+  /// No description provided for @captionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed captions'**
+  String get captionsTitle;
+
+  /// No description provided for @captionsNeedTranscript.
+  ///
+  /// In en, this message translates to:
+  /// **'Transcribe this recording below to enable captions.'**
+  String get captionsNeedTranscript;
+
+  /// No description provided for @captionsTimingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximate words and timing. Your choice is saved for this recording.'**
+  String get captionsTimingNote;
+
+  /// No description provided for @captionsNoWords.
+  ///
+  /// In en, this message translates to:
+  /// **'No caption at this moment.'**
+  String get captionsNoWords;
+
+  /// No description provided for @captionsPreferenceFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Your caption choice couldn\'t be saved. Try switching it again.'**
+  String get captionsPreferenceFailed;
 }
 
 class _AppLocalizationsDelegate

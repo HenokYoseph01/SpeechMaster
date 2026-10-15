@@ -70,6 +70,27 @@ should increment the pubspec build number normally; do not uninstall to update.
    estimate and reporting uncertainty. Validate across accents and microphone
    distances before scores or coaching claims.
 
+## Saved recordings and closed captions
+
+The home screen now offers Your recordings, ordered newest first from the
+existing local database. Each clip opens local replay and its own optional
+transcript. Cached transcripts load automatically; opening a clip never starts
+recognition. Missing WAVs show an unavailable message without deleting metadata.
+Existing acoustic pause intervals are restored without rerunning analysis.
+
+Closed captions appear beneath playback controls when a transcript exists.
+Phrases follow emission timestamps and seeking, with the current word emphasized.
+Cue size, word-gap split and maximum final-word hold are configurable in
+`assets/transcription_config.json`. Gaps without words are not classified as
+pauses; captions hide during known acoustic pauses. Timing and recognition remain
+approximate. This is a caption display, not forced word alignment.
+
+Captions default on for available transcripts. An explicit per-recording choice
+is saved atomically in `<recording.wav>.captions.json` and restored on reopening.
+Switching captions off retains the transcript. Future delete/export flows must
+handle both transcript and caption-preference sidecars. No database schema,
+scoring, paid feature or network behavior changes are involved.
+
 ## Verification tools and evidence
 
 - `flutter run -t tool/phone_pitch_diagnostics.dart`: analyze saved recordings

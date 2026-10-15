@@ -71,6 +71,9 @@ class TranscriptionConfig {
       'overlapMs',
       'threads',
       'replayLeadMs',
+      'captionWordsPerCue',
+      'captionGapMs',
+      'captionMaxHoldMs',
     ]) {
       if (json[key] is! int || (json[key] as int) <= 0) {
         throw FormatException('Invalid transcription setting: $key');
@@ -86,6 +89,9 @@ class TranscriptionConfig {
     overlapMs = json['overlapMs'] as int;
     threads = json['threads'] as int;
     replayLeadMs = json['replayLeadMs'] as int;
+    captionWordsPerCue = json['captionWordsPerCue'] as int;
+    captionGapMs = json['captionGapMs'] as int;
+    captionMaxHoldMs = json['captionMaxHoldMs'] as int;
     final minimum = json['minimumSignalRms'];
     if (minimum is! num ||
         !minimum.isFinite ||
@@ -102,6 +108,7 @@ class TranscriptionConfig {
     }
   }
   late final int version, chunkMs, overlapMs, threads, replayLeadMs;
+  late final int captionWordsPerCue, captionGapMs, captionMaxHoldMs;
   late final double minimumSignalRms;
   int get paceWindowMs => _paceWindowMs;
   late final int _paceWindowMs;
@@ -113,6 +120,9 @@ class TranscriptionConfig {
     'replayLeadMs': replayLeadMs,
     'minimumSignalRms': minimumSignalRms,
     'paceWindowMs': paceWindowMs,
+    'captionWordsPerCue': captionWordsPerCue,
+    'captionGapMs': captionGapMs,
+    'captionMaxHoldMs': captionMaxHoldMs,
   };
 }
 

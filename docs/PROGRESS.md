@@ -14,3 +14,5 @@
 - 2026-10-14: English transcript pace — added recognized word count, whole-clip WPM and configurable timestamp windows, preserving acoustic pauses and syllable estimates; pitch tuning awaits labelled recordings.
 
 - 2026-10-14: Pitch calibration — reproduced dominant-second-harmonic octave errors, added bounded twice-period correction and periodicity diagnostics, version 6 and regression/calibration coverage; real speech ground truth still pending.
+
+- 2026-10-15: Saved recordings and captions — added history/replay with per-clip cached transcripts, synchronized phrase captions and persisted on/off choices; local sidecars, no schema change; export/delete and full historical analysis presentation remain future work.

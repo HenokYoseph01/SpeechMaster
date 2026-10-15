@@ -363,4 +363,48 @@ class AppLocalizationsAm extends AppLocalizations {
   String transcriptPaceWindow(String start, String end, String rate) {
     return '$start–$end s: about $rate words/min';
   }
+
+  @override
+  String get recordingHistory => 'Your recordings';
+
+  @override
+  String get historyEmpty =>
+      'Your saved recordings will appear here after you record.';
+
+  @override
+  String get historyFailed =>
+      'Your recordings couldn\'t load. Please try again.';
+
+  @override
+  String get savedRecordingTitle => 'Saved recording';
+
+  @override
+  String get savedRecordingMissing => 'This recording is no longer available.';
+
+  @override
+  String get savedAudioMissing =>
+      'The audio file is unavailable. Your saved recording details have been kept.';
+
+  @override
+  String savedClipDuration(int seconds) {
+    return '$seconds seconds';
+  }
+
+  @override
+  String get captionsTitle => 'Closed captions';
+
+  @override
+  String get captionsNeedTranscript =>
+      'Transcribe this recording below to enable captions.';
+
+  @override
+  String get captionsTimingNote =>
+      'Approximate words and timing. Your choice is saved for this recording.';
+
+  @override
+  String get captionsNoWords => 'No caption at this moment.';
+
+  @override
+  String get captionsPreferenceFailed =>
+      'Your caption choice couldn\'t be saved. Try switching it again.';
 }

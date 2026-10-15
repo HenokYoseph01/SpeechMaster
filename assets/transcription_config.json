@@ -5,5 +5,8 @@
   "threads": 2,
   "replayLeadMs": 350,
   "minimumSignalRms": 1e-05,
-  "paceWindowMs": 10000
+  "paceWindowMs": 10000,
+  "captionWordsPerCue": 6,
+  "captionGapMs": 1200,
+  "captionMaxHoldMs": 2000
 }

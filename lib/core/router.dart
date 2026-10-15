@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/home/home_screen.dart';
+import '../features/history/history_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/record/record_screen.dart';
 import 'l10n/generated/app_localizations.dart';
@@ -14,6 +15,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/record',
         builder: (context, state) => const RecordScreen(),
+      ),
+      GoRoute(
+        path: '/history',
+        builder: (context, state) => const HistoryScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            builder: (context, state) =>
+                SavedRecordingScreen(id: state.pathParameters['id']!),
+          ),
+        ],
       ),
       GoRoute(
         path: '/settings',

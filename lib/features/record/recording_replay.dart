@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../audio/pitch_result.dart';
 import '../../core/l10n/generated/app_localizations.dart';
 import 'playback_controller.dart';
+import 'recording_captions.dart';
 
 class RecordingReplay extends ConsumerStatefulWidget {
   const RecordingReplay({
@@ -86,6 +87,7 @@ class _RecordingReplayState extends ConsumerState<RecordingReplay>
             number.format(widget.result.durationMs / 1000),
           ),
         ),
+        RecordingCaptions(path: widget.path, recording: widget.result),
         if (state.failed) ...[
           const SizedBox(height: 8),
           Text(strings.playbackFailed),

@@ -139,5 +139,24 @@
         "type": "String"
       }
     }
-  }
+  },
+  "recordingHistory": "Your recordings",
+  "historyEmpty": "Your saved recordings will appear here after you record.",
+  "historyFailed": "Your recordings couldn't load. Please try again.",
+  "savedRecordingTitle": "Saved recording",
+  "savedRecordingMissing": "This recording is no longer available.",
+  "savedAudioMissing": "The audio file is unavailable. Your saved recording details have been kept.",
+  "savedClipDuration": "{seconds} seconds",
+  "@savedClipDuration": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "captionsTitle": "Closed captions",
+  "captionsNeedTranscript": "Transcribe this recording below to enable captions.",
+  "captionsTimingNote": "Approximate words and timing. Your choice is saved for this recording.",
+  "captionsNoWords": "No caption at this moment.",
+  "captionsPreferenceFailed": "Your caption choice couldn't be saved. Try switching it again."
 }
